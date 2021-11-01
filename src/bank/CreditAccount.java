@@ -12,8 +12,8 @@ public class CreditAccount {
     
     private int getAccountNumberFromFile()
     {
-        int i = 1;
-        return i;
+        
+        return 0;
     }
 
     public double getAccountSum()
