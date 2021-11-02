@@ -1,18 +1,25 @@
 package bank;
 
-import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class test {
-    public static void main(String[] args) throws FileNotFoundException
+    
+    test()
     {
-        String timeStamp = new SimpleDateFormat("yyyy/MM/dd\tHH:mm").format(Calendar.getInstance().getTime());
-        System.out.println(timeStamp);
-        
+        JFrame frame = new JFrame("A Simple Swing App");
+        frame.setSize(300, 150);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel text = new JLabel("This is the label!");
+        frame.add(text);
+        frame.setVisible(true);
         
     }
-
+    
+    public static void main(String[] args)
+    {
+        new test();
+    } 
     
     
 }

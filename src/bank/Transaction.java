@@ -13,11 +13,19 @@ import java.util.Calendar;
 
 class Transaction {
 
-    private String accountType; 
+    private long personalNumber;
+    private int accountNumber;
+    private String accountType;
+    private String transactionType;
     
-    Transaction (long ssn, int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType)
+    
+    Transaction (long personalNumber, int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType)
     {
+        this.personalNumber = personalNumber;
+        this.accountNumber = accountNumber;
         this.accountType = accountType;
+        this.transactionType = transactionType;
+        
         
         if (transactionType.equals("+"))
         {
@@ -28,7 +36,7 @@ class Transaction {
         }
     }
     
-    private String addingMoney(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum)
+    public String addingMoney(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum)
     {
         String s = "";
         if (accountType.equals("s"))
@@ -49,7 +57,7 @@ class Transaction {
         return s;
     }
     
-    private String withdrawingMoney(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum)
+    public String withdrawingMoney(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum)
     {
         String s = "";
         if (accountType.equals("s"))
