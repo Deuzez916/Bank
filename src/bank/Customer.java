@@ -10,6 +10,7 @@ public class Customer {
 
     ArrayList<SavingsAccount> savingsAccountList = new ArrayList<>();
     ArrayList<CreditAccount> creditAccountList = new ArrayList<>();
+    ArrayList<Transaction> transactionList = new ArrayList<>();
     
     Customer(String name, String lastName, long ssn) throws FileNotFoundException
     {
@@ -20,6 +21,7 @@ public class Customer {
     {
         PrintStream p = new PrintStream(new BufferedOutputStream(new FileOutputStream(ssn + "Savings.txt")));
         p = new PrintStream(new BufferedOutputStream(new FileOutputStream(ssn + "Credit.txt")));
+        p = new PrintStream(new BufferedOutputStream(new FileOutputStream(ssn + "Transaction.txt")));
         p.close();
     }
 }

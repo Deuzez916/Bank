@@ -1,11 +1,14 @@
 package bank;
 
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class test {
     public static void main(String[] args) throws FileNotFoundException
     {
-        Customer c = new Customer("Simon", "Persson", 198504238525L);
+        String timeStamp = new SimpleDateFormat("yyyy/MM/dd\tHH:mm").format(Calendar.getInstance().getTime());
+        System.out.println(timeStamp);
         
         
     }
