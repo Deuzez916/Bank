@@ -91,7 +91,7 @@ public  class Customer
     private void printToTransactionFile(long personalNumber ,Transaction t) throws IOException
     {
         BufferedWriter writer = new BufferedWriter(new FileWriter(personalNumber + "Transaction.txt", true));
-        writer.write(t.getTransactionString() + "\n" + t.getTransactionInfo() + "\n|\n");
+        writer.write(t.getTransactionInfo() + "\n");
         writer.close();
     }
 

@@ -12,5 +12,8 @@ public class test
         c.addStoreTransactionList(1_000_001, "s", 50.00, 75.00, 125.00, "+");
         c.addStoreTransactionList(1_000_001, "s", 125.00, 500.00, 625.00, "+");
         c.addStoreTransactionList(1_000_001, "s", 625.00, 1000.00, 1625.00, "+");
+        System.out.println(c.getStoreTransactionList().get(0).getTransactionString() + "\n");
+        System.out.println(c.getStoreTransactionList().get(1).getTransactionString() + "\n");
+        System.out.println(c.getStoreTransactionList().get(2).getTransactionString() + "\n");
     }
 }
