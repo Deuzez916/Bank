@@ -9,26 +9,26 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-public  class Customer
+public class Customer
 {
+
     private final String name;
-    private final String accountList;
+    private final String lastName;
     private final long personalNumber;
-   
-    
-    ArrayList<SavingsAccount> storeSavingAccountList = new ArrayList<SavingsAccount>();
-    ArrayList<CreditAccount> storeCreditAccountList = new ArrayList<CreditAccount>();
-    ArrayList<Transaction> storeTransactionList = new ArrayList<Transaction>();
+
+    ArrayList<SavingsAccount> savingAccountList = new ArrayList<SavingsAccount>();
+    ArrayList<CreditAccount> creditAccountList = new ArrayList<CreditAccount>();
+    ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
 
     Customer(String name, String accountList, long personalNumber) throws FileNotFoundException
     {
         this.name = name;
-        this.accountList = accountList;
+        this.lastName = accountList;
         this.personalNumber = personalNumber;
         createAccountsList(personalNumber);
     }
-    
-     void createAccountsList(long personalNumber) throws FileNotFoundException
+
+    void createAccountsList(long personalNumber) throws FileNotFoundException
     {
         PrintStream p = new PrintStream(new BufferedOutputStream(new FileOutputStream(personalNumber + "Savings.txt")));
         p = new PrintStream(new BufferedOutputStream(new FileOutputStream(personalNumber + "Credit.txt")));
@@ -36,63 +36,106 @@ public  class Customer
         p.close();
     }
 
-    public void addStoreSavingAccountList() throws FileNotFoundException
+    public void addStoreSavingAccountList() throws FileNotFoundException, IOException
     {
-        storeSavingAccountList.add(new SavingsAccount(0, personalNumber, accountList));
+        SavingsAccount s = new SavingsAccount(personalNumber);
+        savingAccountList.add(s);
+        SavingsAccountInfo(s);
+
     }
 
-    public void addStoreCreditAccountList() throws FileNotFoundException
+    public void addStoreCreditAccountList() throws FileNotFoundException, IOException
     {
-        storeCreditAccountList.add(new CreditAccount(0, personalNumber, accountList));
+        CreditAccount c = new CreditAccount(personalNumber);
+        creditAccountList.add(c);
+        CreditAccountInfo(c);
     }
-    
-    public void addStoreTransactionList( int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType) throws IOException
+
+    public void addStoreTransactionList(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType) throws IOException
     {
         Transaction t = new Transaction(accountNumber, accountType, oldSum, transactionSum, newSum, transactionType);
-        storeTransactionList.add(t);
+        transactionList.add(t);
         printToTransactionFile(personalNumber, t);
     }
 
-    public ArrayList<SavingsAccount> getStoreSavingAccountList()
+    public ArrayList<SavingsAccount> getSavingAccountList()
     {
-        return storeSavingAccountList;
+        return savingAccountList;
     }
 
-    public ArrayList<CreditAccount> getStoreCreditAccountList()
+    public ArrayList<CreditAccount> getCreditAccountList()
     {
-        return storeCreditAccountList;
+        return creditAccountList;
     }
 
-    public ArrayList<Transaction> getStoreTransactionList()
+    public ArrayList<Transaction> getTransactionList()
     {
-        return storeTransactionList;
+        return transactionList;
     }
-    
-    void print()
-    {
-        System.out.println(this.accountList + "");
-    }
-    
+
     public String getName()
     {
         return name;
     }
 
-    public String getAccountList()
+    public String getLastName()
     {
-        return accountList;
+        return lastName;
     }
-    
-    public long getPersonalNUmber()
+
+    public long getPersonalNumber()
     {
         return personalNumber;
     }
-    
-    private void printToTransactionFile(long personalNumber ,Transaction t) throws IOException
+
+    public void SavingsAccountInfo(SavingsAccount s) throws IOException
+    {
+
+        BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt", true));
+        p.write(s.getAccountNumber() + "," + s.getAccountSum() + "," + s.getAccountType() + "\n");
+        p.close();
+
+    }
+
+    public void UpdateSavingsAccountInfo() throws FileNotFoundException, IOException
+    {
+        BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt"));
+
+        for (SavingsAccount savingsAccount : savingAccountList)
+        {
+            p.write(savingsAccount.getAccountNumber() + "," + savingsAccount.getAccountSum() + "," + savingsAccount.getAccountType() + "\n");
+        }
+
+        p.close();
+
+    }
+
+    public void CreditAccountInfo(CreditAccount c) throws IOException
+    {
+
+        BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Credit.txt", true));
+        p.write(c.getAccountNumber() + "," + c.getAccountSum() + "," + c.getAccountType() + "\n");
+        p.close();
+
+    }
+
+    public void UpdateCreditAccountInfo() throws FileNotFoundException, IOException
+    {
+        BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt"));
+
+        for (CreditAccount creditAccount : creditAccountList)
+        {
+            p.write(creditAccount.getAccountNumber() + "," + creditAccount.getAccountSum() + "," + creditAccount.getAccountType() + "\n");
+        }
+
+        p.close();
+
+    }
+
+    private void printToTransactionFile(long personalNumber, Transaction t) throws IOException
     {
         BufferedWriter writer = new BufferedWriter(new FileWriter(personalNumber + "Transaction.txt", true));
         writer.write(t.getTransactionInfo() + "\n");
         writer.close();
     }
-
 }

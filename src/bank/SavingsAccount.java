@@ -7,30 +7,20 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class SavingsAccount {
-    
+public class SavingsAccount
+{
+
     private long personalNumber;
-    private int accountNumber;
-    private String accountType = "s";
-    private double accountSum = 0;
-    
-    SavingsAccount(int personalNumber, double accountSum, String accountType) throws FileNotFoundException
+    int accountNumber;
+    String accountType = "s";
+    double accountSum = 0;
+
+    SavingsAccount(long personalNumber) throws FileNotFoundException
     {
         getAccountNumberFromFile();
-        this.accountSum = accountSum;
-        this.accountType = accountType;
+        this.personalNumber = personalNumber;
     }
-    
-    public String AccountInfo() throws FileNotFoundException{
-        PrintStream p = new PrintStream(new BufferedOutputStream(new FileOutputStream(personalNumber + "Savings.txt")));
-        p.println(accountNumber + "," + accountSum + "," + accountType);
-        return accountNumber + "," + accountSum + "," + accountType;
-    }
-    
-    public void PrintToFile(){
-        
-    }
-    
+
     private void getAccountNumberFromFile() throws FileNotFoundException
     {
         Scanner in = new Scanner(new File("AccountNumber.txt"));
@@ -41,7 +31,6 @@ public class SavingsAccount {
         konto++;
         p.println(konto);
         p.close();
-
     }
 
     public double getAccountSum()
@@ -63,8 +52,9 @@ public class SavingsAccount {
     {
         return accountType;
     }
-    
-    public String toString(){
+
+    public String toString()
+    {
         return accountNumber + accountType + accountSum;
     }
 }

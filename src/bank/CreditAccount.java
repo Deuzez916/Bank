@@ -7,22 +7,20 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class CreditAccount {
-    
-    private int personalNumber;
+public class CreditAccount
+{
+
+    private long personalNumber;
     private int accountNumber;
     private String accountType = "c";
     private double accountSum = 0;
-    
-     CreditAccount (int personalNumber, double accountSum, String accountType) throws FileNotFoundException
+
+    CreditAccount(long personalNumber) throws FileNotFoundException
     {
-        this.personalNumber = personalNumber;
-        this.accountSum = accountSum;
-        this.accountType = accountType;
         getAccountNumberFromFile();
+        this.personalNumber = personalNumber;
     }
 
-    
     private void getAccountNumberFromFile() throws FileNotFoundException
     {
         Scanner in = new Scanner(new File("AccountNumber.txt"));
@@ -33,7 +31,6 @@ public class CreditAccount {
         konto++;
         p.println(konto);
         p.close();
-
     }
 
     public double getAccountSum()
@@ -54,5 +51,10 @@ public class CreditAccount {
     public String getAccountType()
     {
         return accountType;
+    }
+
+    public String toString()
+    {
+        return accountNumber + accountType + accountSum;
     }
 }
