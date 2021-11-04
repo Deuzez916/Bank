@@ -9,83 +9,129 @@ import java.util.Calendar;
 * transaktionstyp
 * belopp
 * saldo (efterTransaktionen)
-*/
+ */
+class Transaction
+{
 
-class Transaction {
+    private final int accountNumber;
+    private final String accountType;
+    private final double oldSum;
+    private final double transactionSum;
+    private final double newSum;
+    private final String transactionType;
+    private final String dateTime;
+    private final String transactionInfo;
+    private String transactionString = "";
 
-    private long personalNumber;
-    private int accountNumber;
-    private String accountType;
-    private String transactionType;
-    
-    
-    Transaction (long personalNumber, int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType)
+    Transaction(int accountNumber, String accountType, double oldSum, double transactionSum,  double newSum, String transactionType)
     {
-        this.personalNumber = personalNumber;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
+        this.oldSum = oldSum;
+        this.transactionSum = transactionSum;
+        this.newSum = newSum;
         this.transactionType = transactionType;
-        
-        
+        this.dateTime = dateAndTime();
+        this.transactionInfo = accountNumber + "," + accountType + "," 
+                + oldSum + "," + transactionSum + "," + newSum + "," 
+                + transactionType + "," + dateTime;
+
         if (transactionType.equals("+"))
         {
-            addingMoney(accountNumber, transactionType, oldSum, transactionSum, newSum);
+            this.transactionString = addingMoney();
         } else if (transactionType.equals("-"))
         {
-            withdrawingMoney(accountNumber, transactionType, oldSum, transactionSum, newSum);
+            this.transactionString = withdrawingMoney();
         }
     }
-    
-    public String addingMoney(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum)
+
+    public String addingMoney()
     {
         String s = "";
         if (accountType.equals("s"))
         {
-        s = "Savings account: " + accountNumber 
-                + "\n" + formatSum(transactionSum) + " + " 
-                + formatSum(oldSum) + " = " 
-                + formatSum(newSum) 
-                + "\n" + dateAndTime();
+            s = "Savings account: ";
         } else if (accountType.equals("c"))
         {
-        s = "Credit account: " + accountNumber 
-                + "\n" + formatSum(transactionSum) + " + " 
-                + formatSum(oldSum) + " = " 
-                + formatSum(newSum) 
-                + "\n" + dateAndTime();
+            s = "Credit account: ";
         }
+        
+        s += accountNumber + "\n" + formatSum(transactionSum) + " + " + 
+                formatSum(oldSum) + " = " + formatSum(newSum) + "\n" + dateTime;
+        
         return s;
     }
-    
-    public String withdrawingMoney(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum)
+
+    public String withdrawingMoney()
     {
         String s = "";
         if (accountType.equals("s"))
         {
-        s = "Savings account: " + accountNumber 
-                + "\n" + formatSum(transactionSum) + " - " 
-                + formatSum(oldSum) + " = " 
-                + formatSum(newSum) 
-                + "\n" + dateAndTime();
+            s = "Savings account: ";
         } else if (accountType.equals("c"))
         {
-        s = "Credit account: " + accountNumber 
-                + "\n" + formatSum(transactionSum) + " - " 
-                + formatSum(oldSum) + " = " 
-                + formatSum(newSum) 
-                + "\n" + dateAndTime();
+            s = "Credit account: ";
         }
+        
+        s += accountNumber + "\n" + formatSum(transactionSum) + " - " + 
+                formatSum(oldSum) + " = " + formatSum(newSum) + "\n" + dateTime;
+
         return s;
     }
-    
+
     private String formatSum(double sum)
     {
         return String.format("%.2f", sum);
     }
-    
+
     private String dateAndTime()
     {
-        return new SimpleDateFormat("yyyy/MM/dd\tHH:mm").format(Calendar.getInstance().getTime());
+        return new SimpleDateFormat("yyyy/MM/dd    HH:mm").format(Calendar.getInstance().getTime());
+    }
+
+    public int getAccountNumber()
+    {
+        return accountNumber;
+    }
+
+    public String getAccountType()
+    {
+        return accountType;
+    }
+
+    public double getOldSum()
+    {
+        return oldSum;
+    }
+
+    public double getTransactionSum()
+    {
+        return transactionSum;
+    }
+
+    public double getNewSum()
+    {
+        return newSum;
+    }
+
+    public String getTransactionType()
+    {
+        return transactionType;
+    }
+
+    public String getDateTime()
+    {
+        return dateTime;
+    }
+
+    public String getTransactionInfo()
+    {
+        return transactionInfo;
+    }
+    
+    public String getTransactionString()
+    {
+        return transactionString;
     }
     
 }

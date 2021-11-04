@@ -1,7 +1,11 @@
 package bank;
+
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
@@ -42,9 +46,11 @@ public  class Customer
         storeCreditAccountList.add(new CreditAccount(0, personalNumber, accountList));
     }
     
-    public void addStoreTransactionList(long personalNumber, int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType)
+    public void addStoreTransactionList( int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType) throws IOException
     {
-        storeTransactionList.add(new Transaction(personalNumber, accountNumber, accountType, oldSum, transactionSum, newSum, transactionType));
+        Transaction t = new Transaction(accountNumber, accountType, oldSum, transactionSum, newSum, transactionType);
+        storeTransactionList.add(t);
+        printToTransactionFile(personalNumber, t);
     }
 
     public ArrayList<SavingsAccount> getStoreSavingAccountList()
@@ -80,6 +86,13 @@ public  class Customer
     public long getPersonalNUmber()
     {
         return personalNumber;
+    }
+    
+    private void printToTransactionFile(long personalNumber ,Transaction t) throws IOException
+    {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(personalNumber + "Transaction.txt", true));
+        writer.write(t.getTransactionString() + "\n" + t.getTransactionInfo() + "\n|\n");
+        writer.close();
     }
 
 }

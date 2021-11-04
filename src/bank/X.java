@@ -44,10 +44,10 @@ public class X {
         while (run)
         {
             System.out.print("\nBank Admin meny"
-                    + "\n1 - View Customers"
-                    + "\n2 - Manage account"
-                    + "\n3 - Create account"
-                    + "\n4 - Remove account"
+                    + "\n1 - View customer"
+                    + "\n2 - Manage customer"
+                    + "\n3 - Create customer"
+                    + "\n4 - Remove customer"
                     + "\n5 - Go back"
                     + "\n"
                     + "\nChoice - ");
@@ -59,13 +59,13 @@ public class X {
                     viewCustomers();
                     break;
                 case "2":
-                    manageAccount();
+                    manageCustomers();
                     break;
                 case "3":
-                    createAccount();
+                    createCustomers();
                     break;
                 case "4":
-                    removeAccount();
+                    removeCustomers();
                     break;
                 case "5":
                     run = false;
@@ -82,19 +82,19 @@ public class X {
         System.out.println("\nView customer");
     }
 
-    private static void manageAccount()
+    private static void manageCustomers()
     {
-        System.out.println("\nManage account");
+        System.out.println("\nManage customer");
     }
 
-    private static void createAccount()
+    private static void createCustomers()
     {
-        System.out.println("\nCreate account");
+        System.out.println("\nCreate customer");
     }
 
-    private static void removeAccount()
+    private static void removeCustomers()
     {
-        System.out.println("\nRemove account");
+        System.out.println("\nRemove customer");
     }
     
     public static void customer()
