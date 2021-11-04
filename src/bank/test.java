@@ -1,25 +1,16 @@
 package bank;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class test {
-    
-    test()
+public class test
+{
+    public static void main(String[] args) throws FileNotFoundException, IOException
     {
-        JFrame frame = new JFrame("A Simple Swing App");
-        frame.setSize(300, 150);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel text = new JLabel("This is the label!");
-        frame.add(text);
-        frame.setVisible(true);
+        Customer c = new Customer("Stig","Andresson",195002105354L);
         
+        c.addStoreTransactionList(1_000_001, "s", 50.00, 75.00, 125.00, "+");
+        c.addStoreTransactionList(1_000_001, "s", 125.00, 500.00, 625.00, "+");
+        c.addStoreTransactionList(1_000_001, "s", 625.00, 1000.00, 1625.00, "+");
     }
-    
-    public static void main(String[] args)
-    {
-        new test();
-    } 
-    
-    
 }
