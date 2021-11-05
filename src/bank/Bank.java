@@ -1,21 +1,29 @@
 package bank;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Bank
 {
-    static ArrayList<Customer> customerList = new ArrayList<>();
+    ArrayList<Customer> customerList = new ArrayList<>();
 
-    public static void addCustomer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
+    public  void addCustomer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
     {
        Customer customer = new Customer(name, lastName, personalNumber);
        customerList.add(customer);
        addCustomerToFile(name, lastName, personalNumber);
+    }
+
+    public  ArrayList<Customer> getCustomerList()
+    {
+        return customerList;
     }
     
     public static void addCustomerToFile(String name, String lastName, long personalNumber) throws IOException
@@ -25,7 +33,7 @@ public class Bank
         bfWriter.close();
     }
     
-    public static void uppdateCustomerToFile() throws IOException
+    public void uppdateCustomerToFile() throws IOException
     {
         BufferedWriter bfWriter = new BufferedWriter(new FileWriter("CustomerList.txt"));
         
@@ -36,10 +44,17 @@ public class Bank
         bfWriter.close();
     }
     //--------------------------------------------------------------------------
-    public ArrayList<String> getCustomers()
+    void getCustomers() throws IOException
     {
-        ArrayList<String> ar = new ArrayList<String>();
-        return ar;
+        
+        try (BufferedReader fileIn = Files.newBufferedReader(Paths.get("CustomerList.txt")))
+        {
+            for(String s;(s = fileIn.readLine()) != null;)
+            {
+                String [] splitString = s.split(",");
+                customerList.add(new Customer(splitString[0], splitString[1], Long.parseLong(splitString[2])));
+            }
+        }
     }
 
     // Returnerar true om kund skapades annars returneras false.
