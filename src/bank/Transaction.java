@@ -44,6 +44,28 @@ class Transaction
             this.transactionString = withdrawingMoney();
         }
     }
+    
+    Transaction(int accountNumber, String accountType, double oldSum, double transactionSum,  double newSum, String transactionType, String dateTime)
+    {
+        this.accountNumber = accountNumber;
+        this.accountType = accountType;
+        this.oldSum = oldSum;
+        this.transactionSum = transactionSum;
+        this.newSum = newSum;
+        this.transactionType = transactionType;
+        this.dateTime = dateTime;
+        this.transactionInfo = accountNumber + "," + accountType + "," 
+                + oldSum + "," + transactionSum + "," + newSum + "," 
+                + transactionType + "," + dateTime;
+        
+        if (transactionType.equals("+"))
+        {
+            this.transactionString = addingMoney();
+        } else if (transactionType.equals("-"))
+        {
+            this.transactionString = withdrawingMoney();
+        }
+    }
 
     public String addingMoney()
     {

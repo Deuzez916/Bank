@@ -20,6 +20,12 @@ public class CreditAccount
         getAccountNumberFromFile();
         this.personalNumber = personalNumber;
     }
+    
+    CreditAccount(int accountNumber, double accountSum)
+    {
+        this.accountNumber = accountNumber;
+        this.accountSum = accountSum;
+    }
 
     private void getAccountNumberFromFile() throws FileNotFoundException
     {
