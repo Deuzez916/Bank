@@ -24,10 +24,10 @@ public class Customer
     ArrayList<CreditAccount> creditAccountList = new ArrayList<CreditAccount>();
     ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
 
-    Customer(String name, String accountList, long personalNumber) throws FileNotFoundException, IOException
+    Customer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
     {
         this.name = name;
-        this.lastName = accountList;
+        this.lastName = lastName;
         this.personalNumber = personalNumber;
         createAccountsList(personalNumber);
     }
@@ -96,7 +96,7 @@ public class Customer
     {
         SavingsAccount s = new SavingsAccount(personalNumber);
         savingAccountList.add(s);
-        SavingsAccountInfo(s);
+        printToSavingsAccountList(s);
 
     }
 
@@ -104,17 +104,55 @@ public class Customer
     {
         CreditAccount c = new CreditAccount(personalNumber);
         creditAccountList.add(c);
-        CreditAccountInfo(c);
+        printToCreditAccountList(c);
     }
 
-    public void addStoreTransactionList(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType) throws IOException
+    public void addTransactionList(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType) throws IOException
     {
         Transaction t = new Transaction(accountNumber, accountType, oldSum, transactionSum, newSum, transactionType);
         transactionList.add(t);
         printToTransactionFile(personalNumber, t);
     }
+    
+    public void removeSavingsAccount(int accountNumber) throws IOException
+    {
+        int index = 0;
+        for (int i = 0; i < savingAccountList.size(); i++)
+        {
+            if (accountNumber == savingAccountList.get(i).getAccountNumber())
+            {
+                index = i;
+                break;
+            }
+        }
+        
+        double oldSum = savingAccountList.get(index).getAccountSum();
+        double transactionSum = oldSum;
+        double newSum = oldSum - transactionSum;
+        addTransactionList(accountNumber, "s", oldSum, transactionSum, newSum, "r");
+        savingAccountList.remove(index);
+    }
+    
+    public void removeCreditAccount(int accountNumber) throws IOException
+    {
+        int index = 0;
+        for (int i = 0; i < creditAccountList.size(); i++)
+        {
+            if (accountNumber == creditAccountList.get(i).getAccountNumber())
+            {
+                index = i;
+                break;
+            }
+        }
+        
+        double oldSum = savingAccountList.get(index).getAccountSum();
+        double transactionSum = oldSum;
+        double newSum = oldSum - transactionSum;
+        addTransactionList(accountNumber, "c", oldSum, transactionSum, newSum, "r");
+        creditAccountList.remove(index);
+    }
 
-    public void SavingsAccountInfo(SavingsAccount s) throws IOException
+    public void printToSavingsAccountList(SavingsAccount s) throws IOException
     {
 
         try ( BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt", true)))
@@ -124,7 +162,7 @@ public class Customer
 
     }
 
-    public void UpdateSavingsAccountInfo() throws FileNotFoundException, IOException
+    public void UpdateSavingsAccountList() throws FileNotFoundException, IOException
     {
         try ( BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt")))
         {
@@ -136,7 +174,7 @@ public class Customer
 
     }
 
-    public void CreditAccountInfo(CreditAccount c) throws IOException
+    public void printToCreditAccountList(CreditAccount c) throws IOException
     {
 
         try ( BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Credit.txt", true)))
@@ -146,7 +184,7 @@ public class Customer
 
     }
 
-    public void UpdateCreditAccountInfo() throws FileNotFoundException, IOException
+    public void UpdateCreditAccountList() throws FileNotFoundException, IOException
     {
         try ( BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt")))
         {

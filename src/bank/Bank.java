@@ -14,7 +14,7 @@ public class Bank
 {
     ArrayList<Customer> customerList = new ArrayList<>();
 
-    public  void addCustomer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
+    public void addCustomer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
     {
        Customer customer = new Customer(name, lastName, personalNumber);
        customerList.add(customer);

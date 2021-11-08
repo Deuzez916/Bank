@@ -15,15 +15,16 @@ class Transaction
 
     private final int accountNumber;
     private final String accountType;
-    private final double oldSum;
-    private final double transactionSum;
-    private final double newSum;
+    private double oldSum;
+    private double transactionSum;
+    private double newSum;
     private final String transactionType;
     private final String dateTime;
     private final String transactionInfo;
     private String transactionString = "";
 
-    Transaction(int accountNumber, String accountType, double oldSum, double transactionSum,  double newSum, String transactionType)
+    //Creating new transaction
+    Transaction(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType)
     {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
@@ -32,20 +33,24 @@ class Transaction
         this.newSum = newSum;
         this.transactionType = transactionType;
         this.dateTime = dateAndTime();
-        this.transactionInfo = accountNumber + "," + accountType + "," 
-                + oldSum + "," + transactionSum + "," + newSum + "," 
+        this.transactionInfo = accountNumber + "," + accountType + ","
+                + oldSum + "," + transactionSum + "," + newSum + ","
                 + transactionType + "," + dateTime;
 
         if (transactionType.equals("+"))
         {
-            this.transactionString = addingMoney();
+            this.transactionString = addMoney();
         } else if (transactionType.equals("-"))
         {
-            this.transactionString = withdrawingMoney();
+            this.transactionString = withdrawMoney();
+        } else if (transactionType.equalsIgnoreCase("r"))
+        {
+            this.transactionString = removeAccount();
         }
     }
-    
-    Transaction(int accountNumber, String accountType, double oldSum, double transactionSum,  double newSum, String transactionType, String dateTime)
+
+    //Loading transaction from file
+    Transaction(int accountNumber, String accountType, double oldSum, double transactionSum, double newSum, String transactionType, String dateTime)
     {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
@@ -54,51 +59,73 @@ class Transaction
         this.newSum = newSum;
         this.transactionType = transactionType;
         this.dateTime = dateTime;
-        this.transactionInfo = accountNumber + "," + accountType + "," 
-                + oldSum + "," + transactionSum + "," + newSum + "," 
+        this.transactionInfo = accountNumber + "," + accountType + ","
+                + oldSum + "," + transactionSum + "," + newSum + ","
                 + transactionType + "," + dateTime;
-        
+
         if (transactionType.equals("+"))
         {
-            this.transactionString = addingMoney();
+            this.transactionString = addMoney();
         } else if (transactionType.equals("-"))
         {
-            this.transactionString = withdrawingMoney();
+            this.transactionString = withdrawMoney();
+        }else if (transactionType.equalsIgnoreCase("r"))
+        {
+            this.transactionString = removeAccount();
         }
     }
 
-    public String addingMoney()
+    public String addMoney()
     {
-        String s = "";
+        String addMoneyString = "";
         if (accountType.equals("s"))
         {
-            s = "Savings account: ";
+            addMoneyString = "Savings account: ";
         } else if (accountType.equals("c"))
         {
-            s = "Credit account: ";
+            addMoneyString = "Credit account: ";
         }
-        
-        s += accountNumber + "\n" + formatSum(transactionSum) + " + " + 
-                formatSum(oldSum) + " = " + formatSum(newSum) + "\n" + dateTime;
-        
-        return s;
+
+        addMoneyString += accountNumber + "\n" + formatSum(oldSum) + " + "
+                + formatSum(transactionSum) + " = " + formatSum(newSum)
+                + "\n" + dateTime;
+        return addMoneyString;
     }
 
-    public String withdrawingMoney()
+    public String withdrawMoney()
     {
-        String s = "";
+        String withdrawMoneyString = "";
         if (accountType.equals("s"))
         {
-            s = "Savings account: ";
+            withdrawMoneyString = "Savings account: ";
         } else if (accountType.equals("c"))
         {
-            s = "Credit account: ";
+            withdrawMoneyString = "Credit account: ";
         }
-        
-        s += accountNumber + "\n" + formatSum(transactionSum) + " - " + 
-                formatSum(oldSum) + " = " + formatSum(newSum) + "\n" + dateTime;
 
-        return s;
+        withdrawMoneyString += accountNumber + "\n" + formatSum(oldSum) + " - "
+                + formatSum(transactionSum) + " = " + formatSum(newSum)
+                + "\n" + dateTime;
+
+        return withdrawMoneyString;
+    }
+
+    public String removeAccount()
+    {
+        String removeAccountString = "";
+        if (accountType.equals("s"))
+        {
+            removeAccountString = "Closing Savings account: ";
+        } else if (accountType.equals("c"))
+        {
+            removeAccountString = "Closing Credit account: ";
+        }
+
+        removeAccountString += accountNumber + "\n" + formatSum(oldSum) + " - "
+                + formatSum(transactionSum) + " = " + formatSum(newSum)
+                + "\n" + dateTime;
+
+        return removeAccountString;
     }
 
     private String formatSum(double sum)
@@ -150,10 +177,10 @@ class Transaction
     {
         return transactionInfo;
     }
-    
+
     public String getTransactionString()
     {
         return transactionString;
     }
-    
+
 }

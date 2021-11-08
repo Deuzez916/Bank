@@ -11,9 +11,9 @@ public class SavingsAccount
 {
 
     private long personalNumber;
-    int accountNumber;
-    String accountType = "s";
-    double accountSum = 0;
+    private int accountNumber;
+    private String accountType = "s";
+    private double accountSum = 0;
 
     SavingsAccount(long personalNumber) throws FileNotFoundException
     {
