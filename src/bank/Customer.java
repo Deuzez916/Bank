@@ -92,7 +92,7 @@ public class Customer
         }
     }
 
-    public void addStoreSavingAccountList() throws FileNotFoundException, IOException
+    public void addSavingAccountList() throws FileNotFoundException, IOException
     {
         SavingsAccount s = new SavingsAccount(personalNumber);
         savingAccountList.add(s);
@@ -100,7 +100,7 @@ public class Customer
 
     }
 
-    public void addStoreCreditAccountList() throws FileNotFoundException, IOException
+    public void addCreditAccountList() throws FileNotFoundException, IOException
     {
         CreditAccount c = new CreditAccount(personalNumber);
         creditAccountList.add(c);
