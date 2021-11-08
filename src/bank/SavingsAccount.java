@@ -61,6 +61,6 @@ public class SavingsAccount
 
     public String toString()
     {
-        return accountNumber + accountType + accountSum;
+        return "Savings Account" + " ".repeat(12) + accountNumber + " ".repeat(25) + accountSum;
     }
 }

@@ -12,6 +12,12 @@ import java.util.ArrayList;
 
 public class Bank
 {
+    Bank() throws FileNotFoundException
+    {
+        BankGUI bankGUI = new BankGUI();
+        
+    }
+    
     ArrayList<Customer> customerList = new ArrayList<>();
 
     public void addCustomer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
