@@ -6,6 +6,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -24,6 +27,11 @@ import javax.swing.event.ListSelectionListener;
 
 public class BankGUI extends Bank
 {
+    
+    public void ADMIN_SCREEN()
+    {
+        
+    }
     
     public void LOAD_CUSTOMER(Customer customer) 
     {
@@ -66,7 +74,7 @@ public class BankGUI extends Bank
         leftSidePanel.setPreferredSize(new Dimension(400, 535));
         leftSidePanel.setLayout(new FlowLayout(FlowLayout.CENTER,50,38));
         
-    //Instruction Label---------------------------------------------------------
+    //Customer Info Label-------------------------------------------------------
         JLabel lblPersonalInfo = new JLabel();
         lblPersonalInfo.setFont(new Font(lblPersonalInfo.getFont().getName(), lblPersonalInfo.getFont().getStyle(), 15));
         lblPersonalInfo.setText("<html>Name - " + customer.getName()
@@ -85,9 +93,9 @@ public class BankGUI extends Bank
         btnRemoveAccount.setPreferredSize(new Dimension(125, 100));
         btnRemoveAccount.setEnabled(false);
         
-        JButton btnViewTransaction = new JButton("<html>View<br/>Transactions<html>");
-        btnViewTransaction.setPreferredSize(new Dimension(125, 100));
-        btnViewTransaction.setEnabled(false);
+        JButton btnViewTransactions = new JButton("<html>View<br/>Transactions<html>");
+        btnViewTransactions.setPreferredSize(new Dimension(125, 100));
+        btnViewTransactions.setEnabled(false);
         
         JButton btnExit = new JButton("Exit");
         btnExit.setPreferredSize(new Dimension(300, 50));
@@ -134,11 +142,11 @@ public class BankGUI extends Bank
                 }
                 model.removeElementAt(index);
                 btnRemoveAccount.setEnabled(false);
-                btnViewTransaction.setEnabled(false);
+                btnViewTransactions.setEnabled(false);
             }
         });
         
-        btnViewTransaction.addActionListener(new ActionListener()
+        btnViewTransactions.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent arg0)
@@ -156,15 +164,7 @@ public class BankGUI extends Bank
             }
         });
         
-    //Adding to Leftside Panel--------------------------------------------------
-        leftSidePanel.add(lblPersonalInfo);
-        leftSidePanel.add(btnAddAccount);
-        leftSidePanel.add(btnChangeName);
-        leftSidePanel.add(btnRemoveAccount);
-        leftSidePanel.add(btnViewTransaction);
-        leftSidePanel.add(btnExit);
-        
-    //Listeners-----------------------------------------------------------------
+    //Set Button Enables--------------------------------------------------------
         btnRemoveAccount.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent e) 
@@ -173,11 +173,11 @@ public class BankGUI extends Bank
             }
         });
         
-        btnViewTransaction.addActionListener(new ActionListener() 
+        btnViewTransactions.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent e) 
             {
-                btnViewTransaction.setEnabled(false);//Disable here            
+                btnViewTransactions.setEnabled(false);//Disable here            
             }
         });
         
@@ -186,9 +186,17 @@ public class BankGUI extends Bank
             public void valueChanged(ListSelectionEvent e) 
             {
                 btnRemoveAccount.setEnabled(true);
-                btnViewTransaction.setEnabled(true);
+                btnViewTransactions.setEnabled(true);
             }
         });
+        
+    //Adding to Leftside Panel--------------------------------------------------
+        leftSidePanel.add(lblPersonalInfo);
+        leftSidePanel.add(btnAddAccount);
+        leftSidePanel.add(btnChangeName);
+        leftSidePanel.add(btnRemoveAccount);
+        leftSidePanel.add(btnViewTransactions);
+        leftSidePanel.add(btnExit);
         
     //Adding to JFrame----------------------------------------------------------
         customerScreen.add(leftSidePanel);
@@ -199,16 +207,17 @@ public class BankGUI extends Bank
     
     public void CUSTOMER_SCREEN(Customer customer) throws FileNotFoundException
     {
-        SavingsAccount s = new SavingsAccount(199506207423L);
-        JFrame customerScreen = new JFrame("Customer");
+        JFrame customerScreen = new JFrame("Customer - " + customer.getName() 
+                + " " + customer.getLastName() + " - " + customer.getPersonalNumber());
         customerScreen.setSize(900, 575);
         customerScreen.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
         
-        //List Handeling--------------------------------------------------------
-        JPanel listPanel = new JPanel();
-        listPanel.setPreferredSize(new Dimension(450, 385));
-        listPanel.setLayout(new BorderLayout());
+    //Rightside Panel-----------------------------------------------------------
+        JPanel rightSidePanel = new JPanel();
+        rightSidePanel.setPreferredSize(new Dimension(450, 385));
+        rightSidePanel.setLayout(new BorderLayout());
         
+    //Account List--------------------------------------------------------------
         JLabel lblAccountList = new JLabel("Account Typ" + " ".repeat(28) + "AccountNumber" 
                 + " ".repeat(21) + "Balance"); 
         
@@ -217,32 +226,61 @@ public class BankGUI extends Bank
         lstAccountList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	lstAccountList.setFont(new Font(lstAccountList.getFont().getName(), Font.PLAIN, 14));
         
+        for (int i = 0; i < customer.getSavingAccountList().size(); i++)
+        {
+            model.addElement(customer.getSavingAccountList().get(i).toString());
+        }
+        for (int i = 0; i < customer.getCreditAccountList().size(); i++)
+        {
+            model.addElement(customer.getCreditAccountList().get(i).toString());
+        }
         lstAccountList.setModel(model);
-        model.addElement(s.toString());
-        
-        
         lstAccountList.setVisibleRowCount(10);
-        listPanel.add(lblAccountList, BorderLayout.NORTH);
-        listPanel.add(new JScrollPane(lstAccountList), BorderLayout.CENTER);
         
-        //Leftside Handeling----------------------------------------------------
-        JPanel leftSide = new JPanel();
-        leftSide.setPreferredSize(new Dimension(400, 535));
-        leftSide.setLayout(new FlowLayout(FlowLayout.CENTER,50,25));
+    //Adding to Rightside Panel-------------------------------------------------
+        rightSidePanel.add(lblAccountList, BorderLayout.NORTH);
+        rightSidePanel.add(new JScrollPane(lstAccountList), BorderLayout.CENTER);
         
+    //Leftside Panel------------------------------------------------------------
+        JPanel leftSidePanel = new JPanel();
+        leftSidePanel.setPreferredSize(new Dimension(400, 535));
+        leftSidePanel.setLayout(new FlowLayout(FlowLayout.CENTER,50,23));
+        
+    //Instruction Label---------------------------------------------------------    
         JLabel lblAmount = new JLabel();
         lblAmount.setText("<html>1. Choose an account from the list"
-                + "<br/>2. Then type in the amount in field below"
-                + "<br/>3. Press Add or Withdraw <html>");
+                + "<br/>2. Type in the transaction amount in the field below"
+                + "<br/>3. Press Add or Withdraw to make an transaction<html>");
         lblAmount.setPreferredSize(new Dimension(300, 42));
         
-        
+    //Transaction Sum TextField-------------------------------------------------   
         JTextField txtAmount = new JTextField();
-        txtAmount.setPreferredSize(new Dimension(300, 50));
+        txtAmount.setPreferredSize(new Dimension(300, 45));
         txtAmount.setFont(new Font(txtAmount.getFont().getName(),txtAmount.getFont().getStyle(),30));
+        txtAmount.setEnabled(false);
         
+    //Credit Limit Label--------------------------------------------------------    
+        JLabel lblCreditLimit = new JLabel("<html>Credit Limit = - 5000 "
+                + "<br/>Current Credit = " + 0 + "<html>"); 
+        lblCreditLimit.setPreferredSize(new Dimension(300, 28));
+        
+    //Leftside Buttons----------------------------------------------------------    
         JButton btnAddMoney = new JButton("<html>Add<br/>Money<html>");
         btnAddMoney.setPreferredSize(new Dimension(125, 100));
+        btnAddMoney.setEnabled(false);
+        
+        JButton btnWithdrawMoney = new JButton("<html>Withdraw<br/>Money<html>");
+        btnWithdrawMoney.setPreferredSize(new Dimension(125, 100));
+        btnWithdrawMoney.setEnabled(false);
+        
+        JButton btnViewTransactions = new JButton("View Transactions");
+        btnViewTransactions.setPreferredSize(new Dimension(300, 50));
+        btnViewTransactions.setEnabled(false);
+        
+        JButton btnExit = new JButton("Exit");
+        btnExit.setPreferredSize(new Dimension(300, 50));
+    
+    //Buttons Events------------------------------------------------------------    
         btnAddMoney.addActionListener(new ActionListener()
         {
             @Override
@@ -252,31 +290,73 @@ public class BankGUI extends Bank
             }
         });
         
-        JButton btnWithdrawMoney = new JButton("<html>Withdraw<br/>Money<html>");
-        btnWithdrawMoney.setPreferredSize(new Dimension(125, 100));
+        btnWithdrawMoney.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                System.out.println("btnWithdrawMoney.addActionListener");
+            }
+        });
         
-        JButton btnViewTransactions = new JButton("View Transactions");
-        btnViewTransactions.setPreferredSize(new Dimension(300, 50));
+        btnViewTransactions.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                System.out.println("btnViewTransactions.addActionListener");
+            }
+        });
         
-        JLabel lblCreditLimit = new JLabel("<html>Credit Limit = - 5000 "
-                + "<br/>Current Credit = " + 0 + "<html>"); 
-        lblCreditLimit.setPreferredSize(new Dimension(300, 28));
+        btnExit.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                System.out.println("btnExit.addActionListener");
+            }
+        });
         
-        JButton btnExit = new JButton("Exit");
-        btnExit.setPreferredSize(new Dimension(300, 50));
+    //Set Button Enables--------------------------------------------------------    
         
-        leftSide.add(lblAmount);
-        leftSide.add(txtAmount);
-        leftSide.add(btnAddMoney);
-        leftSide.add(btnWithdrawMoney);
-        leftSide.add(btnViewTransactions);
-        leftSide.add(lblCreditLimit);
-        leftSide.add(btnExit);
+        txtAmount.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                txtAmount.setEnabled(false);          
+            }
+        }); 
         
-        //----------------------------------------------------------------------
-        customerScreen.add(leftSide);
-        customerScreen.add(listPanel);
+        lstAccountList.addListSelectionListener(new ListSelectionListener() 
+        {
+            public void valueChanged(ListSelectionEvent e) 
+            {
+                txtAmount.setEnabled(true);
+                btnViewTransactions.setEnabled(true);
+            }
+        });
+        
+        txtAmount.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+               btnAddMoney.setEnabled(true);
+               btnWithdrawMoney.setEnabled(true);
+            }
+        });
+        
+    //Adding to Leftside Panel--------------------------------------------------    
+        leftSidePanel.add(lblAmount);
+        leftSidePanel.add(txtAmount);
+        leftSidePanel.add(btnAddMoney);
+        leftSidePanel.add(btnWithdrawMoney);
+        leftSidePanel.add(btnViewTransactions);
+        leftSidePanel.add(lblCreditLimit);
+        leftSidePanel.add(btnExit);
+        
+    //Adding to JFrame----------------------------------------------------------
+        customerScreen.add(leftSidePanel);
+        customerScreen.add(rightSidePanel);
         customerScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         customerScreen.setVisible(true);
     }
+    
 }

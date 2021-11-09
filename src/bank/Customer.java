@@ -19,6 +19,9 @@ public class Customer
     private final String name;
     private final String lastName;
     private final long personalNumber;
+    private final double creditLimet = -5000.00;
+    private double currentCredit = 0;
+    
 
     ArrayList<SavingsAccount> savingAccountList = new ArrayList<SavingsAccount>();
     ArrayList<CreditAccount> creditAccountList = new ArrayList<CreditAccount>();
@@ -51,7 +54,7 @@ public class Customer
 
     private void loadSavingAccountList() throws FileNotFoundException, IOException
     {
-        try ( BufferedReader fileIn = Files.newBufferedReader(Paths.get("CustomerList.txt")))
+        try ( BufferedReader fileIn = Files.newBufferedReader(Paths.get(personalNumber + "Savings.txt")))
         {
             for (String s; (s = fileIn.readLine()) != null;)
             {
@@ -64,7 +67,7 @@ public class Customer
 
     private void loadCreditAccountList() throws FileNotFoundException, IOException
     {
-        try ( BufferedReader fileIn = Files.newBufferedReader(Paths.get("CustomerList.txt")))
+        try ( BufferedReader fileIn = Files.newBufferedReader(Paths.get(personalNumber + "Credit.txt")))
         {
             for (String s; (s = fileIn.readLine()) != null;)
             {
@@ -77,7 +80,7 @@ public class Customer
 
     private void loadTransactionList() throws FileNotFoundException, IOException
     {
-        try ( BufferedReader fileIn = Files.newBufferedReader(Paths.get("CustomerList.txt")))
+        try ( BufferedReader fileIn = Files.newBufferedReader(Paths.get(personalNumber + "Transaction.txt")))
         {
             for (String s; (s = fileIn.readLine()) != null;)
             {
@@ -234,4 +237,19 @@ public class Customer
         return personalNumber;
     }
 
+    public double getCreditLimet()
+    {
+        return creditLimet;
+    }
+
+    public double getCurrentCredit()
+    {
+        return currentCredit;
+    }
+
+    public void setCurrentCredit(double currentCredit)
+    {
+        this.currentCredit = currentCredit;
+    }
+    
 }
