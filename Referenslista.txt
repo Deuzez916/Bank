@@ -1,0 +1,83 @@
+// GUI variabel syntax
+http://zuskin.com/java_naming.htm
+
+
+// A Visual Guide to Layout Managers
+https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
+
+
+//Java FlowLayout
+https://www.youtube.com/watch?v=pDqjHozkMBs
+
+
+//Java swing GUI tutorial #28: JList, ListSelectionListener and DefaultListModel
+https://www.youtube.com/watch?v=KOI1WbkKUpQ&t=15s
+
+
+//Set JTextField text size
+https://java2everyone.blogspot.com/2008/12/set-jtextfield-text-size.html
+
+
+//How to specify Jlist width?
+https://stackoverflow.com/questions/19819723/how-to-specify-jlist-width/28266336
+
+
+//JList API
+https://docs.oracle.com/javase/7/docs/api/javax/swing/JList.html
+
+
+//Java Code Examples for javax.swing.JList#setFont()
+https://www.programcreek.com/java-api-examples/?class=javax.swing.JList&method=setFont
+
+
+//How to load a Java GUI class from a main class?
+https://stackoverflow.com/questions/25803428/how-to-load-a-java-gui-class-from-a-main-class
+
+
+//How to get string from JTextField and save it in variable?
+https://stackoverflow.com/questions/36936186/how-to-get-string-from-jtextfield-and-save-it-in-variable
+
+
+//Get selected value from JList
+https://examples.javacodegeeks.com/desktop-java/swing/jlist/get-selected-value-from-jlist/
+
+
+//Enable one JButton and disable another
+https://stackoverflow.com/questions/26366331/enable-one-jbutton-and-disable-another
+
+
+//Java - JList see if ANYTHING is selected
+https://stackoverflow.com/questions/3519072/java-jlist-see-if-anything-is-selected
+
+
+//Disabling a button when a list item isn't selected in Java
+https://stackoverflow.com/questions/20048108/disabling-a-button-when-a-list-item-isnt-selected-in-java
+
+
+//Java Swing (GUI) - Update JList Data - Study Viral
+https://www.youtube.com/watch?v=LHTeJu6Bo-s
+
+
+//
+
+
+
+//
+
+
+
+//
+
+
+
+//
+
+
+
+//
+
+
+
+//
+
+
