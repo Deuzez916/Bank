@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.FileNotFoundException;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,10 +17,79 @@ import javax.swing.ListSelectionModel;
 
 public class BankGUI extends JFrame
 {
-    SavingsAccount s = new SavingsAccount(199506207423L);
     
-    BankGUI() throws FileNotFoundException
+    public static void LOAD_CUSTOMER() throws FileNotFoundException
     {
+        SavingsAccount s = new SavingsAccount(199506207423L);
+        JFrame customerScreen = new JFrame("Customer");
+        customerScreen.setSize(900, 575);
+        customerScreen.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+        
+        //List Handeling--------------------------------------------------------
+        JPanel listPanel = new JPanel();
+        listPanel.setPreferredSize(new Dimension(450, 385));
+        listPanel.setLayout(new BorderLayout());
+        
+        JLabel lblAccountList = new JLabel("Account Typ" + " ".repeat(28) + "AccountNumber" 
+                + " ".repeat(21) + "Balance"); 
+        
+        JList<String> lstAccountList = new JList<>();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        lstAccountList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	lstAccountList.setFont(new Font(lstAccountList.getFont().getName(), Font.PLAIN, 14));
+        
+        lstAccountList.setModel(model);
+        model.addElement(s.toString());
+        
+        
+        lstAccountList.setVisibleRowCount(10);
+        listPanel.add(lblAccountList, BorderLayout.NORTH);
+        listPanel.add(new JScrollPane(lstAccountList), BorderLayout.CENTER);
+        
+        //Leftside Handeling----------------------------------------------------
+        JPanel leftSide = new JPanel();
+        leftSide.setPreferredSize(new Dimension(400, 535));
+        leftSide.setLayout(new FlowLayout(FlowLayout.CENTER,50,38));
+        
+        JLabel lblPersonalInfo = new JLabel();
+        lblPersonalInfo.setFont(new Font(lblPersonalInfo.getFont().getName(), lblPersonalInfo.getFont().getStyle(), 15));
+        lblPersonalInfo.setText("<html>Name - Bengt"
+                + "<br/>Lastname - Nilsson"
+                + "<br/>SSN - 198502159156<html>");
+        lblPersonalInfo.setPreferredSize(new Dimension(300, 55));
+        
+        JButton btnAddAccount = new JButton("<html>Add<br/>Account<html>");
+        btnAddAccount.setPreferredSize(new Dimension(125, 100));
+        
+        JButton btnChangeName = new JButton("<html>Change<br/>Name<html>");
+        btnChangeName.setPreferredSize(new Dimension(125, 100));
+        
+        JButton btnRemoveAccount = new JButton("<html>Remove<br/>Account<html>");
+        btnRemoveAccount.setPreferredSize(new Dimension(125, 100));
+        
+        JButton btnViewTransaction = new JButton("<html>View<br/>Transactions<html>");
+        btnViewTransaction.setPreferredSize(new Dimension(125, 100));
+        
+        JButton btnExit = new JButton("Exit");
+        btnExit.setPreferredSize(new Dimension(300, 50));
+        
+        leftSide.add(lblPersonalInfo);
+        leftSide.add(btnAddAccount);
+        leftSide.add(btnChangeName);
+        leftSide.add(btnRemoveAccount);
+        leftSide.add(btnViewTransaction);
+        leftSide.add(btnExit);
+        
+        //----------------------------------------------------------------------
+        customerScreen.add(leftSide);
+        customerScreen.add(listPanel);
+        customerScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        customerScreen.setVisible(true);
+    }
+    
+    public static void CUSTOMER_SCREEN() throws FileNotFoundException
+    {
+        SavingsAccount s = new SavingsAccount(199506207423L);
         JFrame customerScreen = new JFrame("Customer");
         customerScreen.setSize(900, 575);
         customerScreen.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
@@ -96,6 +164,8 @@ public class BankGUI extends JFrame
     
     public static void main(String[] args) throws FileNotFoundException
     {
-        new BankGUI();
+        LOAD_CUSTOMER();
+        
+        //CUSTOMER_SCREEN();
     }
 }
