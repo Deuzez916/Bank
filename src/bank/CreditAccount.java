@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class CreditAccount
@@ -61,6 +62,6 @@ public class CreditAccount
 
     public String toString()
     {
-        return accountNumber + accountType + accountSum;
+        return "Credit Account" + " ".repeat(15) + accountNumber + " ".repeat(25) + accountSum;
     }
 }

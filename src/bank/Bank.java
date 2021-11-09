@@ -1,10 +1,14 @@
 package bank;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,45 +16,79 @@ import java.util.ArrayList;
 
 public class Bank
 {
-    Bank() throws FileNotFoundException
+    private static ArrayList<Customer> customerList;
+    public static void main(String[] args) throws IOException
     {
-        BankGUI bankGUI = new BankGUI();
+        customerList = createCustomerList();
         
+        addCustomer("Bengt", "Anderson", 195001307423L);
+        customerList.get(0).addSavingAccountList();
+        customerList.get(0).addCreditAccountList();
+        
+        BankGUI b = new BankGUI();
+        b.LOAD_CUSTOMER(getCustomerList().get(0));
     }
+  
     
-    ArrayList<Customer> customerList = new ArrayList<>();
+    private static ArrayList<Customer> createCustomerList() throws FileNotFoundException, IOException
+    {
+        ArrayList<Customer> customerArrayList = new ArrayList<>();
+        
+        File fileController = new File("CustomerList.txt");
+        if (fileController.exists() == false)
+        {
+            PrintStream p = new PrintStream(new BufferedOutputStream(new FileOutputStream("CustomerList.txt")));
+            p.close();
+        } else
+        {
+            try ( BufferedReader fileIn = Files.newBufferedReader(Paths.get("CustomerList.txt")))
+        {
+            for (String s; (s = fileIn.readLine()) != null;)
+            {
+                String[] sInfo = s.split(",");
 
-    public void addCustomer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
+                customerArrayList.add(new Customer(sInfo[0], sInfo[1], Long.parseLong(sInfo[2])));
+            }
+        }
+        }
+        
+        return customerArrayList;
+    }
+
+    public static void addCustomer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
     {
        Customer customer = new Customer(name, lastName, personalNumber);
        customerList.add(customer);
        addCustomerToFile(name, lastName, personalNumber);
     }
 
-    public  ArrayList<Customer> getCustomerList()
+    public static  ArrayList<Customer> getCustomerList()
     {
         return customerList;
     }
     
     public static void addCustomerToFile(String name, String lastName, long personalNumber) throws IOException
     {
-        BufferedWriter bfWriter = new BufferedWriter(new FileWriter("CustomerList.txt", true));
-        bfWriter.write(name + "," + lastName + "," + personalNumber + "\n");
-        bfWriter.close();
+        try (BufferedWriter bfWriter = new BufferedWriter(new FileWriter("CustomerList.txt", true)))
+        {
+            bfWriter.write(name + "," + lastName + "," + personalNumber + "\n");
+        }
     }
     
-    public void uppdateCustomerToFile() throws IOException
+    public static void uppdateCustomerToFile() throws IOException
     {
-        BufferedWriter bfWriter = new BufferedWriter(new FileWriter("CustomerList.txt"));
-        
-        for (Customer customer : customerList)
+        try (BufferedWriter bfWriter = new BufferedWriter(new FileWriter("CustomerList.txt")))
         {
-            bfWriter.write(customer.getName() + "," + customer.getLastName()+ "," + customer.getPersonalNumber() + "\n");
+            for (Customer customer : customerList)
+            {
+                bfWriter.write(customer.getName() + "," + customer.getLastName()+ "," + customer.getPersonalNumber() + "\n");
+            }
         }
-        bfWriter.close();
     }
     //--------------------------------------------------------------------------
-    void getCustomers() throws IOException
+    
+    
+    public static void getCustomers() throws IOException
     {
         
         try (BufferedReader fileIn = Files.newBufferedReader(Paths.get("CustomerList.txt")))
@@ -64,12 +102,12 @@ public class Bank
     }
 
     // Returnerar true om kund skapades annars returneras false.
-    public boolean addCustomer(String name, long personalNumber)
+    public static boolean addCustomer(String name, long personalNumber)
     {
         return true;
     }
 
-    public ArrayList<String> getCustomer(long personalNumber)
+    public static ArrayList<String> getCustomer(long personalNumber)
     {
         ArrayList<String> ar = new ArrayList<String>();
         return ar;
@@ -79,7 +117,7 @@ public class Bank
     Returnerar true om namnet ändrades annars returnerar false (om
     kunden inte fanns).
     */
-    public boolean changeCustomerName(String name, long personalNumber)
+    public static boolean changeCustomerName(String name, long personalNumber)
     {
         return true;
     }
@@ -88,14 +126,14 @@ public class Bank
     Listan som returneras ska innehålla information om alla konton som togs
     bort och saldot som kunden får tillbaka.
      */
-    public ArrayList<String> removeCustomer(long personalNumber)
+    public static ArrayList<String> removeCustomer(long personalNumber)
     {
         ArrayList<String> ar = new ArrayList<String>();
         return ar;
     }
 
     // Returnerar kontonumret som det skapade kontot fick
-    public int addSavingsAccount(long personalNumber)
+    public static int addSavingsAccount(long personalNumber)
     {
         return 0;
     }
@@ -105,7 +143,7 @@ public class Bank
     kontonnummer accountId som tillhör kunden personalNumber
     (kontonummer, saldo, kontotyp).
      */
-    public String getAccount(long personalNumber, int accountId)
+    public static String getAccount(long personalNumber, int accountId)
     {
         return "0";
     }
@@ -114,7 +152,7 @@ public class Bank
     Gör en insättning på konto med kontonnummer accountId som tillhör
     kunden personalNumber, returnerar true om det gick bra annars false.
     */
-    public boolean deposit(long personalNumber, int accountId, BigDecimal amount)
+    public static boolean deposit()
     {
         return true;
     }
@@ -123,7 +161,7 @@ public class Bank
     Gör ett uttag på konto med kontonnummer accountId som tillhör kunden
     personalNumber, returnerar true om det gick bra annars false.
      */
-    public boolean withdraw(long personalNumber, int accountId, BigDecimal amount)
+    public static boolean withdraw(long personalNumber, int accountId, BigDecimal amount)
     {
         return true;
     }
@@ -132,13 +170,40 @@ public class Bank
     Stänger ett konto med kontonnummer accountId som tillhör kunden personalNumber
     . Returnerar information om det konto som stängdes.
      */
-    public String closeAccount(long personalNumber, int accountId)
+    public static void closeAccount(long personalNumber, int accountId) throws IOException
     {
-        return "0";
+        int customerIndex = 0;
+        for (int i = 0; i < customerList.size(); i++)
+        {
+            if(customerList.get(i).getPersonalNumber() == personalNumber)
+            {
+                customerIndex = i;
+                break;
+            }
+        }
+
+        Customer customer = customerList.get(customerIndex);
+        for (int i = 0; i < customer.getSavingAccountList().size(); i++)
+        {
+            if(customer.getSavingAccountList().get(i).getAccountNumber() == accountId)
+            {
+                customer.removeSavingsAccount(accountId);
+                break;
+            }
+        }
+        
+        for (int i = 0; i < customer.getCreditAccountList().size(); i++)
+        {
+            if(customer.getCreditAccountList().get(i).getAccountNumber() == accountId)
+            {
+                customer.removeCreditAccount(accountId);
+                break;
+            }
+        }
     }
     
     //Detta visar transaktionshistoriken för ett visst kundkonto
-    public ArrayList<String> getTransactions(long personalNumber, int accountId)
+    public static ArrayList<String> getTransactions(long personalNumber, int accountId)
     {
         ArrayList<String> ar = new ArrayList<String>();
         return ar;

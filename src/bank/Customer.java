@@ -145,7 +145,7 @@ public class Customer
             }
         }
         
-        double oldSum = savingAccountList.get(index).getAccountSum();
+        double oldSum = creditAccountList.get(index).getAccountSum();
         double transactionSum = oldSum;
         double newSum = oldSum - transactionSum;
         addTransactionList(accountNumber, "c", oldSum, transactionSum, newSum, "r");
