@@ -189,7 +189,7 @@ public class Customer
 
     public void updateCreditAccountList() throws FileNotFoundException, IOException
     {
-        try ( BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt")))
+        try ( BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Credit.txt")))
         {
             for (CreditAccount creditAccount : creditAccountList)
             {
