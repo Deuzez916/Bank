@@ -222,38 +222,28 @@ public class Customer
         return transactionList;
     }
     
-    public void addMoneyToAccount(int accountNumber, double transactionSum) throws IOException
+    public void addMoneyToAccount(int accountIndex, double transactionSum, String accountType) throws IOException
     {
-        String accountType = "";
+        int accountNumber = 0;
         double oldSum = 0;
         double newSum = 0;
         String transactionType = "+";
         
-        
-        for (int i = 0; i < getSavingAccountList().size(); i++)
+        if (accountType.equalsIgnoreCase("s"))
         {
-            if (getSavingAccountList().get(i).getAccountNumber() == accountNumber)
-            {
-                accountType = "s";
-                oldSum = getSavingAccountList().get(i).getAccountSum();
-                getSavingAccountList().get(i).addMoney(transactionSum);
-                updateSavingsAccountList();
-                newSum = getSavingAccountList().get(i).getAccountSum();
-                break;
-            }
-        }
+            accountNumber = getSavingAccountList().get(accountIndex).getAccountNumber();
+            oldSum = getSavingAccountList().get(accountIndex).getAccountSum();
+            getSavingAccountList().get(accountIndex).addMoney(transactionSum);
+            updateSavingsAccountList();
+            newSum = getSavingAccountList().get(accountIndex).getAccountSum();
 
-        for (int i = 0; i < getCreditAccountList().size(); i++)
+        } else
         {
-            if (getCreditAccountList().get(i).getAccountNumber() == accountNumber)
-            {
-                accountType = "c";
-                oldSum = getCreditAccountList().get(i).getAccountSum();
-                getCreditAccountList().get(i).addMoney(transactionSum);
-                updateCreditAccountList();
-                newSum = getCreditAccountList().get(i).getAccountSum();
-                break;
-            }
+            accountNumber = getCreditAccountList().get(accountIndex).getAccountNumber();
+            oldSum = getCreditAccountList().get(accountIndex).getAccountSum();
+            getCreditAccountList().get(accountIndex).addMoney(transactionSum);
+            updateCreditAccountList();
+            newSum = getCreditAccountList().get(accountIndex).getAccountSum();
         }
         addTransactionList(accountNumber, accountType, oldSum, transactionSum, newSum, transactionType);
         

@@ -148,18 +148,18 @@ public class Bank
     Gör en insättning på konto med kontonnummer accountId som tillhör
     kunden personalNumber, returnerar true om det gick bra annars false.
      */
-    public static boolean deposit(boolean parsable, Long personalNumber, int accountId, double transactionSum) throws IOException
+    public static boolean deposit(String accountType, Long personalNumber, int accountIndex, double transactionSum) throws IOException
     {
         Customer customer = customerList.get(getCustomerIndex(personalNumber));
-        customer.addMoneyToAccount(accountId, transactionSum);
-        return parsable;
+        customer.addMoneyToAccount(accountIndex, transactionSum, accountType);
+        return true;
     }
 
     /*
     Gör ett uttag på konto med kontonnummer accountId som tillhör kunden
     personalNumber, returnerar true om det gick bra annars false.
      */
-    public static boolean withdraw(long personalNumber, int accountId, BigDecimal amount)
+    public static boolean withdraw(long personalNumber, int accountId, double transactionSum)
     {
         return true;
     }

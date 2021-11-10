@@ -399,6 +399,50 @@ public class BankGUI extends Bank
             public void actionPerformed(ActionEvent arg0)
             {
                 int index = lstAccountList.getSelectedIndex();
+                int accountIndex = index;
+                int accountId = 0;
+                String accountType = "";
+                
+                if (index < customer.getSavingAccountList().size())
+                {
+                    accountId = customer.getSavingAccountList().get(index).getAccountNumber();
+                    accountType = "s";
+                } else if ((index - customer.getSavingAccountList().size()) <= customer.getCreditAccountList().size())
+                {
+                    accountIndex -= customer.getSavingAccountList().size();
+                    accountId = customer.getCreditAccountList().get(accountIndex).getAccountNumber();
+                    accountType = "c";
+                }
+
+                double transactionSum = 0;
+                
+                try
+                {
+                    transactionSum = Double.parseDouble(txtAmount.getText());
+                    deposit(accountType, customer.getPersonalNumber(), accountIndex, transactionSum);
+                    
+                    if (accountType.equalsIgnoreCase("s"))
+                    {
+                        accountType = customer.getSavingAccountList().get(index).toString();
+                    } else if (accountType.equalsIgnoreCase("c"))
+                    {
+                        accountType = customer.getCreditAccountList().get(index - customer.getSavingAccountList().size()).toString();
+                    }
+                    model.setElementAt(accountType, index);
+                    
+                }catch (Exception e)
+                {
+                    System.err.println("ups, this was not castable to double");
+                }
+            }
+        });
+
+        btnWithdrawMoney.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                int index = lstAccountList.getSelectedIndex();
                 int accountId = 0;
                 String uppdateList = "";
                 
@@ -411,13 +455,13 @@ public class BankGUI extends Bank
                     accountId = customer.getCreditAccountList().get(index - customer.getSavingAccountList().size()).getAccountNumber();
                     uppdateList = "c";
                 }
-
+                
                 double transactionSum = 0;
                 
                 try
                 {
                     transactionSum = Double.parseDouble(txtAmount.getText());
-                    deposit(true, customer.getPersonalNumber(), accountId, transactionSum);
+                    withdraw(customer.getPersonalNumber(), accountId, transactionSum);
                     
                     if (uppdateList.equalsIgnoreCase("s"))
                     {
@@ -432,15 +476,6 @@ public class BankGUI extends Bank
                 {
                     System.err.println("ups, this was not castable to double");
                 }
-            }
-        });
-
-        btnWithdrawMoney.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent arg0)
-            {
-                System.out.println("btnWithdrawMoney.addActionListener");
             }
         });
 
