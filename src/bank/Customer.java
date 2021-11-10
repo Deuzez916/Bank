@@ -165,7 +165,7 @@ public class Customer
 
     }
 
-    public void UpdateSavingsAccountList() throws FileNotFoundException, IOException
+    public void updateSavingsAccountList() throws FileNotFoundException, IOException
     {
         try ( BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt")))
         {
@@ -187,7 +187,7 @@ public class Customer
 
     }
 
-    public void UpdateCreditAccountList() throws FileNotFoundException, IOException
+    public void updateCreditAccountList() throws FileNotFoundException, IOException
     {
         try ( BufferedWriter p = new BufferedWriter(new FileWriter(personalNumber + "Savings.txt")))
         {
@@ -220,6 +220,64 @@ public class Customer
     public ArrayList<Transaction> getTransactionList()
     {
         return transactionList;
+    }
+    
+    public void addMoneyToAccount(int accountNumber, double transactionSum) throws IOException
+    {
+        String accountType = "";
+        double oldSum = 0;
+        double newSum = 0;
+        String transactionType = "+";
+        
+        
+        for (int i = 0; i < getSavingAccountList().size(); i++)
+        {
+            if (getSavingAccountList().get(i).getAccountNumber() == accountNumber)
+            {
+                accountType = "s";
+                oldSum = getSavingAccountList().get(i).getAccountSum();
+                getSavingAccountList().get(i).addMoney(transactionSum);
+                updateSavingsAccountList();
+                newSum = getSavingAccountList().get(i).getAccountSum();
+                break;
+            }
+        }
+
+        for (int i = 0; i < getCreditAccountList().size(); i++)
+        {
+            if (getCreditAccountList().get(i).getAccountNumber() == accountNumber)
+            {
+                accountType = "c";
+                oldSum = getCreditAccountList().get(i).getAccountSum();
+                getCreditAccountList().get(i).addMoney(transactionSum);
+                updateCreditAccountList();
+                newSum = getCreditAccountList().get(i).getAccountSum();
+                break;
+            }
+        }
+        addTransactionList(accountNumber, accountType, oldSum, transactionSum, newSum, transactionType);
+        
+    }
+    
+    public void withdrawMoneyFromAccount(int accountNumber, double transactionSum)
+    {
+        for (int i = 0; i < getSavingAccountList().size(); i++)
+        {
+            if (getSavingAccountList().get(i).getAccountNumber() == accountNumber)
+            {
+                getSavingAccountList().get(i).withdrawMoney(transactionSum);
+                break;
+            }
+        }
+
+        for (int i = 0; i < getCreditAccountList().size(); i++)
+        {
+            if (getCreditAccountList().get(i).getAccountNumber() == accountNumber)
+            {
+                getCreditAccountList().get(i).withdrawMoney(transactionSum);
+                break;
+            }
+        }
     }
 
     public String getName()

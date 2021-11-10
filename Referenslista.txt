@@ -62,8 +62,8 @@ https://www.youtube.com/watch?v=LHTeJu6Bo-s
 https://kodejava.org/how-do-i-add-key-listener-event-handler-to-jtextfield/
 
 
-//
-
+//how to parse double from jtextfield
+https://www.codegrepper.com/search.php?answer_removed=1&q=double%20parse%20jtextfield
 
 
 //

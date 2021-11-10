@@ -24,7 +24,7 @@ public class Bank
         customerList = createCustomerList();
 
         BankGUI b = new BankGUI();
-        b.ADMIN_SCREEN();
+        b.CUSTOMER_SCREEN(customerList.get(0));
     }
 
     private static ArrayList<Customer> createCustomerList() throws FileNotFoundException, IOException
@@ -148,9 +148,11 @@ public class Bank
     Gör en insättning på konto med kontonnummer accountId som tillhör
     kunden personalNumber, returnerar true om det gick bra annars false.
      */
-    public static boolean deposit()
+    public static boolean deposit(boolean parsable, Long personalNumber, int accountId, double transactionSum) throws IOException
     {
-        return true;
+        Customer customer = customerList.get(getCustomerIndex(personalNumber));
+        customer.addMoneyToAccount(accountId, transactionSum);
+        return parsable;
     }
 
     /*
@@ -168,17 +170,7 @@ public class Bank
      */
     public static void closeAccount(long personalNumber, int accountId) throws IOException
     {
-        int customerIndex = 0;
-        for (int i = 0; i < customerList.size(); i++)
-        {
-            if (customerList.get(i).getPersonalNumber() == personalNumber)
-            {
-                customerIndex = i;
-                break;
-            }
-        }
-
-        Customer customer = customerList.get(customerIndex);
+        Customer customer = customerList.get(getCustomerIndex(personalNumber));
         for (int i = 0; i < customer.getSavingAccountList().size(); i++)
         {
             if (customer.getSavingAccountList().get(i).getAccountNumber() == accountId)
@@ -203,5 +195,19 @@ public class Bank
     {
         ArrayList<String> ar = new ArrayList<String>();
         return ar;
+    }
+    
+    private static int getCustomerIndex(Long personalNumber)
+    {
+        int customerIndex = 0;
+        for (int i = 0; i < customerList.size(); i++)
+        {
+            if (customerList.get(i).getPersonalNumber() == personalNumber)
+            {
+                customerIndex = i;
+                break;
+            }
+        }
+        return customerIndex;
     }
 }

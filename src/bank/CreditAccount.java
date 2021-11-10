@@ -45,11 +45,6 @@ public class CreditAccount
         return accountSum;
     }
 
-    public void setAccountSum(double accountSum)
-    {
-        this.accountSum = accountSum;
-    }
-
     public int getAccountNumber()
     {
         return accountNumber;
@@ -58,6 +53,16 @@ public class CreditAccount
     public String getAccountType()
     {
         return accountType;
+    }
+    
+    public void addMoney(double transactionSum)
+    {
+        accountSum += transactionSum;
+    }
+    
+    public void withdrawMoney(double transactionSum)
+    {
+        accountSum -= transactionSum;
     }
 
     public String toString()
