@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -30,7 +29,118 @@ public class BankGUI extends Bank
     
     public void ADMIN_SCREEN()
     {
+    //JFrame--------------------------------------------------------------------
+        JFrame customerScreen = new JFrame("Admin");
+        customerScreen.setSize(900, 575);
+        customerScreen.setLayout(new FlowLayout(FlowLayout.CENTER,0,40));
         
+    //Rightside Panel-----------------------------------------------------------
+        JPanel rightSidePanel = new JPanel();
+        rightSidePanel.setPreferredSize(new Dimension(450, 385));
+        rightSidePanel.setLayout(new BorderLayout());
+        
+    //Account List--------------------------------------------------------------
+        JLabel lblCustomerList = new JLabel("First Name" + " ".repeat(18) + "Last Name" 
+                + " ".repeat(20) + "SSN"); 
+        lblCustomerList.setFont(new Font(lblCustomerList.getFont().getName(), Font.PLAIN, 14));
+        
+        JList<String> lstAccountList = new JList<>();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        lstAccountList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	lstAccountList.setFont(new Font(lstAccountList.getFont().getName(), Font.PLAIN, 14));
+        
+        for (int i = 0; i < getCustomerList().size(); i++)
+        {
+            model.addElement(getCustomerList().get(i).toString());
+        }
+        lstAccountList.setModel(model);
+        lstAccountList.setVisibleRowCount(15);
+        
+    //Adding to Rightside Panel-------------------------------------------------
+        rightSidePanel.add(lblCustomerList, BorderLayout.NORTH);
+        rightSidePanel.add(new JScrollPane(lstAccountList), BorderLayout.CENTER);
+        
+    //Leftside Panel------------------------------------------------------------
+        JPanel leftSidePanel = new JPanel();
+        leftSidePanel.setPreferredSize(new Dimension(400, 450));
+        leftSidePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 52));
+        
+    //Leftside Buttons----------------------------------------------------------
+        JButton btnAddCustomer = new JButton("Add Customer");
+        btnAddCustomer.setPreferredSize(new Dimension(300, 52));
+        
+        JButton btnRemoveCustomer = new JButton("Remove Customer");
+        btnRemoveCustomer.setPreferredSize(new Dimension(300, 52));
+        btnRemoveCustomer.setEnabled(false);
+        
+        JButton btnManageCustomer = new JButton("Manage Customer");
+        btnManageCustomer.setPreferredSize(new Dimension(300, 52));
+        btnManageCustomer.setEnabled(false);
+        
+        JButton btnExit = new JButton("Exit");
+        btnExit.setPreferredSize(new Dimension(300, 52));
+            
+    //Buttons Events------------------------------------------------------------
+        
+        btnAddCustomer.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                System.out.println("btnAddCustomer.addActionListener");
+            }
+        });
+        
+        btnRemoveCustomer.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                System.out.println("btnRemoveCutomer.addActionListener");
+            }
+        });
+        
+        btnManageCustomer.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                System.out.println("btnLoadCustomer.addActionListener");
+            }
+        });
+        
+        btnExit.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                System.out.println("btnExit.addActionListener"); 
+            }
+        });
+        
+    //Set Button Enables--------------------------------------------------------
+        
+        lstAccountList.addListSelectionListener(new ListSelectionListener() 
+        {
+            public void valueChanged(ListSelectionEvent e) 
+            {
+                btnRemoveCustomer.setEnabled(true);
+                btnManageCustomer.setEnabled(true);
+            }
+        });
+        
+    //Adding to Leftside Panel--------------------------------------------------
+        leftSidePanel.add(btnAddCustomer);
+        leftSidePanel.add(btnRemoveCustomer);
+        leftSidePanel.add(btnManageCustomer);
+        leftSidePanel.add(btnExit);
+        
+    //Adding to JFrame----------------------------------------------------------
+        customerScreen.add(leftSidePanel);
+        customerScreen.add(rightSidePanel);
+        customerScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        customerScreen.setVisible(true);
+            
     }
     
     public void LOAD_CUSTOMER(Customer customer) 
@@ -91,11 +201,11 @@ public class BankGUI extends Bank
         
         JButton btnRemoveAccount = new JButton("<html>Remove<br/>Account<html>");
         btnRemoveAccount.setPreferredSize(new Dimension(125, 100));
-        btnRemoveAccount.setEnabled(false);
+        //btnRemoveAccount.setEnabled(false);
         
         JButton btnViewTransactions = new JButton("<html>View<br/>Transactions<html>");
         btnViewTransactions.setPreferredSize(new Dimension(125, 100));
-        btnViewTransactions.setEnabled(false);
+        //btnViewTransactions.setEnabled(false);
         
         JButton btnExit = new JButton("Exit");
         btnExit.setPreferredSize(new Dimension(300, 50));
@@ -169,7 +279,7 @@ public class BankGUI extends Bank
         {
             public void actionPerformed(ActionEvent e) 
             {
-                btnRemoveAccount.setEnabled(false);//Disable here            
+                btnRemoveAccount.setEnabled(false);         
             }
         });
         
@@ -177,7 +287,7 @@ public class BankGUI extends Bank
         {
             public void actionPerformed(ActionEvent e) 
             {
-                btnViewTransactions.setEnabled(false);//Disable here            
+                btnViewTransactions.setEnabled(false);            
             }
         });
         
@@ -336,7 +446,8 @@ public class BankGUI extends Bank
             }
         });
         
-        txtAmount.addKeyListener(new KeyAdapter() {
+        txtAmount.addKeyListener(new KeyAdapter() 
+        {
             public void keyReleased(KeyEvent e) {
                btnAddMoney.setEnabled(true);
                btnWithdrawMoney.setEnabled(true);

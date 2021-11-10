@@ -252,4 +252,12 @@ public class Customer
         this.currentCredit = currentCredit;
     }
     
+    @Override
+    public String toString()
+    {
+       int firstRepeat = 31 - name.length();
+       int secondRepeat = 29 - lastName.length();
+       return name + " ".repeat(firstRepeat) + lastName + " ".repeat(secondRepeat) + personalNumber;
+    }
+    
 }

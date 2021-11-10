@@ -23,10 +23,8 @@ public class Bank
     {
         customerList = createCustomerList();
 
-        System.out.println(getCustomerList().size());
-
         BankGUI b = new BankGUI();
-        b.CUSTOMER_SCREEN(getCustomerList().get(0));
+        b.ADMIN_SCREEN();
     }
 
     private static ArrayList<Customer> createCustomerList() throws FileNotFoundException, IOException
