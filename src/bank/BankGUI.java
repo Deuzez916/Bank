@@ -3,6 +3,7 @@ package bank;
 import static bank.Bank.closeAccount;
 import static bank.Bank.deposit;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -87,7 +88,7 @@ public class BankGUI extends Bank
     public void ADMIN_SCREEN()
     {
         //JFrame--------------------------------------------------------------------
-        JFrame winADMIN_SCREEN = new JFrame("Admin");
+        JFrame winADMIN_SCREEN = new JFrame("Adminzskbfgljdfbglks");
         winADMIN_SCREEN.setSize(900, 575);
         winADMIN_SCREEN.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
 
