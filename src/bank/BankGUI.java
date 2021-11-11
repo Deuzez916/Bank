@@ -29,12 +29,67 @@ import javax.swing.event.ListSelectionListener;
 public class BankGUI extends Bank
 {
 
+    public static void Starting_Screen()
+    {
+        //JFrame--------------------------------------------------------------------
+        JFrame winSTARTING_SCREEN = new JFrame();
+        winSTARTING_SCREEN.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+        
+        //JPanel--------------------------------------------------------------------
+        JPanel leftpanel = new JPanel();
+        JPanel rightpanel = new JPanel();
+        
+        leftpanel.setPreferredSize(new Dimension(400, 535));
+        leftpanel.setLayout(new FlowLayout(FlowLayout.CENTER, 100,100));
+        
+        rightpanel.setPreferredSize(new Dimension(400, 365));
+        rightpanel.setLayout(new FlowLayout(FlowLayout.CENTER,500,15));
+        
+        //JButtons & JTextFields-----------------------------------------------------------------
+        JButton ADMIN = new JButton("ADMIN");
+        ADMIN.setPreferredSize(new Dimension(300, 300));
+        ADMIN.setFont(new Font(ADMIN.getFont().getName(),ADMIN.getFont().getStyle(),37));
+        
+        JButton CUSTOMER = new JButton("CUSTOMER");
+        CUSTOMER.setPreferredSize(new Dimension(300,212));
+        CUSTOMER.setFont(new Font(CUSTOMER.getFont().getName(),CUSTOMER.getFont().getStyle(),37));
+        
+        JTextField SSN = new JTextField("SSN");
+        SSN.setPreferredSize(new Dimension(300, 73));
+        SSN.setHorizontalAlignment(JTextField.CENTER);
+        SSN.setFont(new Font(SSN.getFont().getName(),SSN.getFont().getStyle(),37));
+        
+        //Adding JPanels--------------------------------------------------
+        leftpanel.add(ADMIN);
+        
+        rightpanel.add(CUSTOMER);
+        rightpanel.add(SSN);
+        
+        //Bakgrunds färg
+        //STARTING_SCREEN.setBackground(new java.awt.Color(192,192,192));
+        //leftpanel.setBackground(new java.awt.Color(192,192,192));
+        //rightpanel.setBackground(new java.awt.Color(192,192,192));
+        
+            // 238 knapp färg
+        //Knapp färg
+        ADMIN.setBackground(new java.awt.Color(192,192,192));
+        CUSTOMER.setBackground(new java.awt.Color(192,192,192));
+        SSN.setBackground(new java.awt.Color(192,192,192));
+        
+        //Adding to JFrame----------------------------------------------------------
+        winSTARTING_SCREEN.add(leftpanel);
+        winSTARTING_SCREEN.add(rightpanel);
+        winSTARTING_SCREEN.setSize(900, 575);
+        winSTARTING_SCREEN.setVisible(true);
+        winSTARTING_SCREEN.setResizable(false);
+    }
+    
     public void ADMIN_SCREEN()
     {
         //JFrame--------------------------------------------------------------------
-        JFrame customerScreen = new JFrame("Admin");
-        customerScreen.setSize(900, 575);
-        customerScreen.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
+        JFrame winADMIN_SCREEN = new JFrame("Admin");
+        winADMIN_SCREEN.setSize(900, 575);
+        winADMIN_SCREEN.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
 
         //Rightside Panel-----------------------------------------------------------
         JPanel rightSidePanel = new JPanel();
@@ -136,19 +191,19 @@ public class BankGUI extends Bank
         leftSidePanel.add(btnExit);
 
         //Adding to JFrame----------------------------------------------------------
-        customerScreen.add(leftSidePanel);
-        customerScreen.add(rightSidePanel);
-        customerScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        customerScreen.setVisible(true);
+        winADMIN_SCREEN.add(leftSidePanel);
+        winADMIN_SCREEN.add(rightSidePanel);
+        winADMIN_SCREEN.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        winADMIN_SCREEN.setVisible(true);
 
     }
 
     public void LOAD_CUSTOMER(Customer customer)
     {
         //JFrame--------------------------------------------------------------------
-        JFrame customerScreen = new JFrame("Customer");
-        customerScreen.setSize(900, 575);
-        customerScreen.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        JFrame winLOAD_CUSTOMER = new JFrame("Customer");
+        winLOAD_CUSTOMER.setSize(900, 575);
+        winLOAD_CUSTOMER.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         //Rightside Panel-----------------------------------------------------------
         JPanel rightSidePanel = new JPanel();
@@ -311,18 +366,18 @@ public class BankGUI extends Bank
         leftSidePanel.add(btnExit);
 
         //Adding to JFrame----------------------------------------------------------
-        customerScreen.add(leftSidePanel);
-        customerScreen.add(rightSidePanel);
-        customerScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        customerScreen.setVisible(true);
+        winLOAD_CUSTOMER.add(leftSidePanel);
+        winLOAD_CUSTOMER.add(rightSidePanel);
+        winLOAD_CUSTOMER.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        winLOAD_CUSTOMER.setVisible(true);
     }
 
     public void CUSTOMER_SCREEN(Customer customer) throws FileNotFoundException
     {
-        JFrame customerScreen = new JFrame("Customer - " + customer.getName()
+        JFrame winCUSTOMER_SCREEN = new JFrame("Customer - " + customer.getName()
                 + " " + customer.getLastName() + " - " + customer.getPersonalNumber());
-        customerScreen.setSize(900, 575);
-        customerScreen.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        winCUSTOMER_SCREEN.setSize(900, 575);
+        winCUSTOMER_SCREEN.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
     //Rightside Panel-----------------------------------------------------------
         JPanel rightSidePanel = new JPanel();
@@ -372,8 +427,8 @@ public class BankGUI extends Bank
         txtAmount.setEnabled(false);
 
     //Credit Limit Label--------------------------------------------------------    
-        JLabel lblCreditLimit = new JLabel("<html>Credit Limit = - 5000 "
-                + "<br/>Current Credit = " + 0 + "<html>");
+        JLabel lblCreditLimit = new JLabel("<html>Credit Limit = -5000"
+                + "<br/>Current Credit = " + customer.getCurrentCredit() + "<html>");
         lblCreditLimit.setPreferredSize(new Dimension(300, 28));
 
     //Leftside Buttons----------------------------------------------------------    
@@ -427,6 +482,8 @@ public class BankGUI extends Bank
                     } else if (accountType.equalsIgnoreCase("c"))
                     {
                         accountType = customer.getCreditAccountList().get(index - customer.getSavingAccountList().size()).toString();
+                        lblCreditLimit.setText("<html>Credit Limit = -5000"
+                                + "<br/>Current Credit = " + customer.getCurrentCredit() + "<html>");
                     }
                     model.setElementAt(accountType, index);
                     
@@ -443,34 +500,38 @@ public class BankGUI extends Bank
             public void actionPerformed(ActionEvent arg0)
             {
                 int index = lstAccountList.getSelectedIndex();
+                int accountIndex = index;
                 int accountId = 0;
-                String uppdateList = "";
+                String accountType = "";
                 
                 if (index < customer.getSavingAccountList().size())
                 {
                     accountId = customer.getSavingAccountList().get(index).getAccountNumber();
-                    uppdateList = "s";
+                    accountType = "s";
                 } else if ((index - customer.getSavingAccountList().size()) <= customer.getCreditAccountList().size())
                 {
-                    accountId = customer.getCreditAccountList().get(index - customer.getSavingAccountList().size()).getAccountNumber();
-                    uppdateList = "c";
+                    accountIndex -= customer.getSavingAccountList().size();
+                    accountId = customer.getCreditAccountList().get(accountIndex).getAccountNumber();
+                    accountType = "c";
                 }
-                
+
                 double transactionSum = 0;
                 
                 try
                 {
                     transactionSum = Double.parseDouble(txtAmount.getText());
-                    withdraw(customer.getPersonalNumber(), accountId, transactionSum);
+                    boolean answer = withdraw(customer, accountType, accountIndex, transactionSum);
                     
-                    if (uppdateList.equalsIgnoreCase("s"))
+                    if (accountType.equalsIgnoreCase("s") && answer == true)
                     {
-                        uppdateList = customer.getSavingAccountList().get(index).toString();
-                    } else if (uppdateList.equalsIgnoreCase("c"))
+                        accountType = customer.getSavingAccountList().get(index).toString();
+                    } else if (accountType.equalsIgnoreCase("c") && answer == true)
                     {
-                        uppdateList = customer.getCreditAccountList().get(index - customer.getSavingAccountList().size()).toString();
+                        accountType = customer.getCreditAccountList().get(index - customer.getSavingAccountList().size()).toString();
+                        lblCreditLimit.setText("<html>Credit Limit = -5000"
+                                + "<br/>Current Credit = " + customer.getCurrentCredit() + "<html>");
                     }
-                    model.setElementAt(uppdateList, index);
+                    model.setElementAt(accountType, index);
                     
                 }catch (Exception e)
                 {
@@ -534,10 +595,10 @@ public class BankGUI extends Bank
         leftSidePanel.add(btnExit);
 
     //Adding to JFrame----------------------------------------------------------
-        customerScreen.add(leftSidePanel);
-        customerScreen.add(rightSidePanel);
-        customerScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        customerScreen.setVisible(true);
+        winCUSTOMER_SCREEN.add(leftSidePanel);
+        winCUSTOMER_SCREEN.add(rightSidePanel);
+        winCUSTOMER_SCREEN.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        winCUSTOMER_SCREEN.setVisible(true);
     }
 
 }

@@ -20,18 +20,19 @@ public class Customer
     private final String lastName;
     private final long personalNumber;
     private final double creditLimet = -5000.00;
-    private double currentCredit = 0;
+    private double currentCredit;
     
 
     ArrayList<SavingsAccount> savingAccountList = new ArrayList<SavingsAccount>();
     ArrayList<CreditAccount> creditAccountList = new ArrayList<CreditAccount>();
     ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
 
-    Customer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
+    Customer(String name, String lastName, long personalNumber, double currentCredit) throws FileNotFoundException, IOException
     {
         this.name = name;
         this.lastName = lastName;
         this.personalNumber = personalNumber;
+        this.currentCredit = currentCredit;
         createAccountsList(personalNumber);
     }
 
@@ -233,41 +234,58 @@ public class Customer
         {
             accountNumber = getSavingAccountList().get(accountIndex).getAccountNumber();
             oldSum = getSavingAccountList().get(accountIndex).getAccountSum();
+            
             getSavingAccountList().get(accountIndex).addMoney(transactionSum);
             updateSavingsAccountList();
+            
             newSum = getSavingAccountList().get(accountIndex).getAccountSum();
 
         } else
         {
             accountNumber = getCreditAccountList().get(accountIndex).getAccountNumber();
             oldSum = getCreditAccountList().get(accountIndex).getAccountSum();
+            
             getCreditAccountList().get(accountIndex).addMoney(transactionSum);
             updateCreditAccountList();
+            
             newSum = getCreditAccountList().get(accountIndex).getAccountSum();
+            setCurrentCredit(getCurrentCredit() + transactionSum);
         }
+        
         addTransactionList(accountNumber, accountType, oldSum, transactionSum, newSum, transactionType);
         
     }
     
-    public void withdrawMoneyFromAccount(int accountNumber, double transactionSum)
+    public void withdrawMoneyFromAccount(int accountIndex, double transactionSum, String accountType) throws IOException
     {
-        for (int i = 0; i < getSavingAccountList().size(); i++)
+        int accountNumber = 0;
+        double oldSum = 0;
+        double newSum = 0;
+        String transactionType = "-";
+        
+        if (accountType.equalsIgnoreCase("s"))
         {
-            if (getSavingAccountList().get(i).getAccountNumber() == accountNumber)
-            {
-                getSavingAccountList().get(i).withdrawMoney(transactionSum);
-                break;
-            }
-        }
+            accountNumber = getSavingAccountList().get(accountIndex).getAccountNumber();
+            oldSum = getSavingAccountList().get(accountIndex).getAccountSum();
+            
+            getSavingAccountList().get(accountIndex).withdrawMoney(transactionSum);
+            updateSavingsAccountList();
+            
+            newSum = getSavingAccountList().get(accountIndex).getAccountSum();
 
-        for (int i = 0; i < getCreditAccountList().size(); i++)
+        }else if (accountType.equalsIgnoreCase("c"))
         {
-            if (getCreditAccountList().get(i).getAccountNumber() == accountNumber)
-            {
-                getCreditAccountList().get(i).withdrawMoney(transactionSum);
-                break;
-            }
-        }
+            accountNumber = getCreditAccountList().get(accountIndex).getAccountNumber();
+            oldSum = getCreditAccountList().get(accountIndex).getAccountSum();
+            
+            getCreditAccountList().get(accountIndex).withdrawMoney(transactionSum);
+            updateCreditAccountList();
+            
+            newSum = getCreditAccountList().get(accountIndex).getAccountSum();
+            setCurrentCredit(getCurrentCredit() - transactionSum);
+        } 
+        
+        addTransactionList(accountNumber, accountType, oldSum, transactionSum, newSum, transactionType);
     }
 
     public String getName()
@@ -285,7 +303,7 @@ public class Customer
         return personalNumber;
     }
 
-    public double getCreditLimet()
+    public double getCreditLimit()
     {
         return creditLimet;
     }

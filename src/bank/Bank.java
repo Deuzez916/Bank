@@ -44,7 +44,7 @@ public class Bank
                 {
                     String[] sInfo = s.split(",");
 
-                    customerArrayList.add(new Customer(sInfo[0], sInfo[1], Long.parseLong(sInfo[2])));
+                    customerArrayList.add(new Customer(sInfo[0], sInfo[1], Long.parseLong(sInfo[2]), Double.parseDouble(sInfo[3])));
                 }
             }
         }
@@ -52,11 +52,11 @@ public class Bank
         return customerArrayList;
     }
 
-    public static void addCustomer(String name, String lastName, long personalNumber) throws FileNotFoundException, IOException
+    public static void addCustomer(String name, String lastName, long personalNumber, double currentCredit) throws FileNotFoundException, IOException
     {
-        Customer customer = new Customer(name, lastName, personalNumber);
+        Customer customer = new Customer(name, lastName, personalNumber, currentCredit);
         customerList.add(customer);
-        addCustomerToFile(name, lastName, personalNumber);
+        addCustomerToFile(name, lastName, personalNumber, currentCredit);
     }
 
     public static ArrayList<Customer> getCustomerList()
@@ -64,21 +64,22 @@ public class Bank
         return customerList;
     }
 
-    public static void addCustomerToFile(String name, String lastName, long personalNumber) throws IOException
+    public static void addCustomerToFile(String name, String lastName, long personalNumber, double currentCredit) throws IOException
     {
         try ( BufferedWriter bfWriter = new BufferedWriter(new FileWriter("CustomerList.txt", true)))
         {
-            bfWriter.write(name + "," + lastName + "," + personalNumber + "\n");
+            bfWriter.write(name + "," + lastName + "," + personalNumber + "," + currentCredit + "\n");
         }
     }
 
-    public static void uppdateCustomerToFile() throws IOException
+    public static void updateCustomerToFile() throws IOException
     {
         try ( BufferedWriter bfWriter = new BufferedWriter(new FileWriter("CustomerList.txt")))
         {
             for (Customer customer : customerList)
             {
-                bfWriter.write(customer.getName() + "," + customer.getLastName() + "," + customer.getPersonalNumber() + "\n");
+                bfWriter.write(customer.getName() + "," + customer.getLastName() + "," 
+                        + customer.getPersonalNumber() + "," + customer.getCurrentCredit() +"\n");
             }
         }
     }
@@ -92,7 +93,7 @@ public class Bank
             for (String s; (s = fileIn.readLine()) != null;)
             {
                 String[] splitString = s.split(",");
-                customerList.add(new Customer(splitString[0], splitString[1], Long.parseLong(splitString[2])));
+                customerList.add(new Customer(splitString[0], splitString[1], Long.parseLong(splitString[2]), Double.parseDouble(splitString[3])));
             }
         }
     }
@@ -106,6 +107,7 @@ public class Bank
     public static ArrayList<String> getCustomer(long personalNumber)
     {
         ArrayList<String> ar = new ArrayList<String>();
+        ar.add(customerList.get(getCustomerIndex(personalNumber)).toString());
         return ar;
     }
 
@@ -152,6 +154,7 @@ public class Bank
     {
         Customer customer = customerList.get(getCustomerIndex(personalNumber));
         customer.addMoneyToAccount(accountIndex, transactionSum, accountType);
+        if (accountType.equalsIgnoreCase("c")) updateCustomerToFile();
         return true;
     }
 
@@ -159,15 +162,31 @@ public class Bank
     Gör ett uttag på konto med kontonnummer accountId som tillhör kunden
     personalNumber, returnerar true om det gick bra annars false.
      */
-    public static boolean withdraw(long personalNumber, int accountId, double transactionSum)
+    public boolean withdraw(Customer customer, String accountType, int accountIndex, double transactionSum) throws IOException
     {
-        return true;
+        double withdrawCheck = 0;
+        if (accountType.equalsIgnoreCase("s"))
+        {
+            withdrawCheck = customer.getSavingAccountList().get(accountIndex).getAccountSum();
+            if (withdrawCheck - transactionSum >= 0)
+            {
+                customer.withdrawMoneyFromAccount(accountIndex, transactionSum, accountType);
+                return true;
+            }
+        } else
+        {
+            withdrawCheck = customer.getCurrentCredit();
+            if (withdrawCheck - transactionSum >= customer.getCreditLimit())
+            {
+                customer.withdrawMoneyFromAccount(accountIndex, transactionSum, accountType);
+                updateCustomerToFile();
+                return true;
+            }
+        }
+                return false;
     }
 
-    /*
-    Stänger ett konto med kontonnummer accountId som tillhör kunden personalNumber
-    . Returnerar information om det konto som stängdes.
-     */
+    
     public static void closeAccount(long personalNumber, int accountId) throws IOException
     {
         Customer customer = customerList.get(getCustomerIndex(personalNumber));
@@ -194,6 +213,10 @@ public class Bank
     public static ArrayList<String> getTransactions(long personalNumber, int accountId)
     {
         ArrayList<String> ar = new ArrayList<String>();
+        for (int i = 0; i < 10; i++)
+        {
+            ar.add("");
+        }
         return ar;
     }
     
