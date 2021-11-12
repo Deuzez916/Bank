@@ -24,7 +24,7 @@ public class Bank
         customerList = createCustomerList();
 
         BankGUI b = new BankGUI();
-        b.Customer_Screen(b.getJFrame(), customerList.get(0));
+        b.Manage_Customer(b.getJFrame(), customerList.get(0));
     }
 
     private static ArrayList<Customer> createCustomerList() throws FileNotFoundException, IOException

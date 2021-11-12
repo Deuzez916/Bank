@@ -34,7 +34,6 @@ public class BankGUI extends Bank
     
     public void runBankGUI()
     {
-        
         Starting_Screen(getJFrame());
     }
     
@@ -68,6 +67,18 @@ public class BankGUI extends Bank
         JButton btnAdmin = new JButton("ADMIN");
         btnAdmin.setPreferredSize(new Dimension(300, 300));
         btnAdmin.setFont(new Font(btnAdmin.getFont().getName(),btnAdmin.getFont().getStyle(),37));
+        
+        btnAdmin.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent arg0)
+            {
+                winFrame.remove(pnlStartingScreenLeftPanel);
+                winFrame.remove(plnStartingScreenRightPanel);
+                winFrame.setVisible(false);
+                Admin_Screen(winFrame);
+            }
+        });
+        
         
         JButton btnCustomer = new JButton("CUSTOMER");
         btnCustomer.setPreferredSize(new Dimension(300,212));
@@ -225,7 +236,10 @@ public class BankGUI extends Bank
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                System.out.println("btnLoadCustomer.addActionListener");
+                winFrame.remove(pnlAdminMeny);
+                winFrame.remove(pnlCustomerList);
+                winFrame.setVisible(false);
+                Manage_Customer(winFrame, getCustomerList().get(0));
             }
         });
 
@@ -391,15 +405,81 @@ public class BankGUI extends Bank
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                System.out.println("btnViewTransaction.addActionListener");
-            }
-        });
-        
-        btnViewTransactions.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                btnViewTransactions.setEnabled(false);
+                
+                
+                JPanel transactionList = new JPanel();
+                
+                
+                JList<String> lstTransaction = new JList<>();
+                DefaultListModel<String> model = new DefaultListModel<>();
+                lstTransaction.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                lstTransaction.setFont(new Font(lstTransaction.getFont().getName(), Font.PLAIN, 14));
+                lstTransaction.setVisibleRowCount(10);
+                
+                transactionList.setPreferredSize(new Dimension(400, 410));
+                transactionList.setLayout(new BorderLayout());
+                
+                
+                customer.getTransactionList().get(0);
+                
+                int index = lstAccountList.getSelectedIndex();
+                int accountIndex = index;
+                int accountId = 0;
+                String accountType = "";
+                
+                if (index < customer.getSavingAccountList().size())
+                {
+                    accountId = customer.getSavingAccountList().get(index).getAccountNumber();
+                    accountType = "s";
+                } else if ((index - customer.getSavingAccountList().size()) <= customer.getCreditAccountList().size())
+                {
+                    accountIndex -= customer.getSavingAccountList().size();
+                    accountId = customer.getCreditAccountList().get(accountIndex).getAccountNumber();
+                    accountType = "c";
+                }
+                
+                if(accountType.equalsIgnoreCase("s"))
+                {
+                 accountId = customer.getSavingAccountList().get(index).getAccountNumber();
+                } else if(accountType.equalsIgnoreCase("c"))
+                {
+                    accountId = customer.getCreditAccountList().get(accountIndex).getAccountNumber();
+                }
+                
+                for (int i = 0; i < customer.getTransactionList().size(); i++)
+                {
+                    if(customer.getTransactionList().get(i).getAccountNumber() == accountId){
+                        String [] s = customer.getTransactionList().get(i).getTransactionString().split("!");
+                        String transactionItem = "<html>" + s[0] + "<br/>" + s[1] + "<br/>" + s[2];
+                        model.addElement(transactionItem);
+                    }
+                    
+                    
+                }
+                JButton btnExit = new JButton("Exit");
+                btnExit.addActionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent ae){
+                        btnExit.setPreferredSize(new Dimension(50, 50));
+                        
+                        
+                        btnExit.setVisible(true);
+                        
+                    }
+                });
+                
+
+                lstTransaction.setModel(model);
+                winFrame.remove(pnlManageCustomerMeny);
+                winFrame.remove(pnlManageCustomerAccountList);
+                transactionList.add(lstTransaction);
+                transactionList.add(btnExit, BorderLayout.SOUTH);
+                //buttonExit.setPreferredSize(new Dimension(50, 50));
+                winFrame.add(new JScrollPane(transactionList), BorderLayout.CENTER);
+                winFrame.add(pnlManageCustomerAccountList);
+                winFrame.setVisible(false);
+                winFrame.setVisible(true);
+                System.out.println("btnViewTransactions.addActionListener");
             }
         });
         
@@ -610,6 +690,80 @@ public class BankGUI extends Bank
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
+                
+                
+                JPanel transactionList = new JPanel();
+                
+                
+                JList<String> lstTransaction = new JList<>();
+                DefaultListModel<String> model = new DefaultListModel<>();
+                lstTransaction.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                lstTransaction.setFont(new Font(lstTransaction.getFont().getName(), Font.PLAIN, 14));
+                lstTransaction.setVisibleRowCount(10);
+                
+                transactionList.setPreferredSize(new Dimension(400, 410));
+                transactionList.setLayout(new BorderLayout());
+                
+                
+                customer.getTransactionList().get(0);
+                
+                int index = lstAccountList.getSelectedIndex();
+                int accountIndex = index;
+                int accountId = 0;
+                String accountType = "";
+                
+                if (index < customer.getSavingAccountList().size())
+                {
+                    accountId = customer.getSavingAccountList().get(index).getAccountNumber();
+                    accountType = "s";
+                } else if ((index - customer.getSavingAccountList().size()) <= customer.getCreditAccountList().size())
+                {
+                    accountIndex -= customer.getSavingAccountList().size();
+                    accountId = customer.getCreditAccountList().get(accountIndex).getAccountNumber();
+                    accountType = "c";
+                }
+                
+                if(accountType.equalsIgnoreCase("s"))
+                {
+                 accountId = customer.getSavingAccountList().get(index).getAccountNumber();
+                } else if(accountType.equalsIgnoreCase("c"))
+                {
+                    accountId = customer.getCreditAccountList().get(accountIndex).getAccountNumber();
+                }
+                
+                for (int i = 0; i < customer.getTransactionList().size(); i++)
+                {
+                    if(customer.getTransactionList().get(i).getAccountNumber() == accountId){
+                        String [] s = customer.getTransactionList().get(i).getTransactionString().split("!");
+                        String transactionItem = "<html>" + s[0] + "<br/>" + s[1] + "<br/>" + s[2];
+                        model.addElement(transactionItem);
+                    }
+                    
+                    
+                }
+                JButton btnExit = new JButton("Exit");
+                btnExit.addActionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent ae){
+                        btnExit.setPreferredSize(new Dimension(50, 50));
+                        
+                        
+                        btnExit.setVisible(true);
+                        
+                    }
+                });
+                
+
+                lstTransaction.setModel(model);
+                winFrame.remove(pnlCustomerMenyPanel);
+                winFrame.remove(pnlCustomerAccountList);
+                transactionList.add(lstTransaction);
+                transactionList.add(btnExit, BorderLayout.SOUTH);
+                //buttonExit.setPreferredSize(new Dimension(50, 50));
+                winFrame.add(new JScrollPane(transactionList), BorderLayout.CENTER);
+                winFrame.add(pnlCustomerAccountList);
+                winFrame.setVisible(false);
+                winFrame.setVisible(true);
                 System.out.println("btnViewTransactions.addActionListener");
             }
         });

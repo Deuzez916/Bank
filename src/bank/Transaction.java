@@ -86,9 +86,9 @@ class Transaction
             addMoneyString = "Credit account: ";
         }
 
-        addMoneyString += accountNumber + "\n" + formatSum(oldSum) + " + "
+        addMoneyString += accountNumber + "!" + formatSum(oldSum) + " + "
                 + formatSum(transactionSum) + " = " + formatSum(newSum)
-                + "\n" + dateTime;
+                + "!" + dateTime + "! ";
         return addMoneyString;
     }
 
@@ -103,9 +103,9 @@ class Transaction
             withdrawMoneyString = "Credit account: ";
         }
 
-        withdrawMoneyString += accountNumber + "\n" + formatSum(oldSum) + " - "
+        withdrawMoneyString += accountNumber + "!" + formatSum(oldSum) + " - "
                 + formatSum(transactionSum) + " = " + formatSum(newSum)
-                + "\n" + dateTime;
+                + "!" + dateTime + "! ";
 
         return withdrawMoneyString;
     }
@@ -121,9 +121,9 @@ class Transaction
             removeAccountString = "Closing Credit account: ";
         }
 
-        removeAccountString += accountNumber + "\n" + formatSum(oldSum) + " - "
+        removeAccountString += accountNumber + "!" + formatSum(oldSum) + " - "
                 + formatSum(transactionSum) + " = " + formatSum(newSum)
-                + "\n" + dateTime;
+                + "!" + dateTime + "! ";
 
         return removeAccountString;
     }
