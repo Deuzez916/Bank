@@ -24,7 +24,7 @@ public class Bank
         customerList = createCustomerList();
 
         BankGUI b = new BankGUI();
-        b.Customer_Screen(b.getJFrame(), getCustomerList().get(0));
+        b.runBankGUI();
     }
 
     private static ArrayList<Customer> createCustomerList() throws FileNotFoundException, IOException
@@ -124,10 +124,10 @@ public class Bank
     Listan som returneras ska innehålla information om alla konton som togs
     bort och saldot som kunden får tillbaka.
      */
-    public static ArrayList<String> removeCustomer(long personalNumber)
+    public static void removeCustomer(int index) throws IOException
     {
-        ArrayList<String> ar = new ArrayList<String>();
-        return ar;
+        getCustomerList().remove(index);
+        updateCustomerToFile();
     }
 
     // Returnerar kontonumret som det skapade kontot fick

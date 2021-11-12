@@ -132,20 +132,34 @@ public class BankGUI extends Bank
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                String ssn = txtSSN.getText();
+                long ssn = Long.parseLong(txtSSN.getText());
                 
-                
+                for (int i = 0; i < getCustomerList().size(); i++)
+                {
+                    if (ssn == getCustomerList().get(i).getPersonalNumber())
+                    {
+                        winFrame.remove(pnlStartingScreenLeftPanel);
+                        winFrame.remove(plnStartingScreenRightPanel);
+                        winFrame.setVisible(false);
+                        try
+                        {
+                            Customer_Screen(winFrame, getCustomerList().get(i));
+                        } catch (FileNotFoundException ex)
+                        {
+                            Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                    } else if (i == getCustomerList().size())
+                    {
+                        System.out.println("Hitta inte kund");
+                        break;
+                    }
+                } 
             }
         });
         
         //SSN.setMaximumSize(maximumSize MaxAndMinimumSize);
         //SSN.setMinimumSize(minimumSize 12);
-        
-        
-        
-        
-        
-        
        
         //Adding JPanels------------------------------------------------------------
         pnlStartingScreenLeftPanel.add(btnAdmin);
@@ -186,21 +200,21 @@ public class BankGUI extends Bank
                 + " ".repeat(20) + "SSN");
         lblCustomerList.setFont(new Font(lblCustomerList.getFont().getName(), Font.PLAIN, 14));
 
-        JList<String> lstAccountList = new JList<>();
+        JList<String> lstCustomerList = new JList<>();
         DefaultListModel<String> model = new DefaultListModel<>();
-        lstAccountList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lstAccountList.setFont(new Font(lstAccountList.getFont().getName(), Font.PLAIN, 14));
+        lstCustomerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lstCustomerList.setFont(new Font(lstCustomerList.getFont().getName(), Font.PLAIN, 14));
 
         for (int i = 0; i < getCustomerList().size(); i++)
         {
             model.addElement(getCustomerList().get(i).toString());
         }
-        lstAccountList.setModel(model);
-        lstAccountList.setVisibleRowCount(15);
+        lstCustomerList.setModel(model);
+        lstCustomerList.setVisibleRowCount(15);
 
         //Adding to Rightside Panel-------------------------------------------------
         pnlCustomerList.add(lblCustomerList, BorderLayout.NORTH);
-        pnlCustomerList.add(new JScrollPane(lstAccountList), BorderLayout.CENTER);
+        pnlCustomerList.add(new JScrollPane(lstCustomerList), BorderLayout.CENTER);
 
         //Leftside Panel------------------------------------------------------------
         JPanel pnlAdminMeny = new JPanel();
@@ -237,7 +251,14 @@ public class BankGUI extends Bank
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                System.out.println("btnRemoveCutomer.addActionListener");
+                try
+                {
+                    removeCustomer(lstCustomerList.getSelectedIndex());
+                    model.removeElementAt(lstCustomerList.getSelectedIndex());
+                } catch (IOException ex)
+                {
+                    Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -266,7 +287,7 @@ public class BankGUI extends Bank
         });
 
         //Set Button Enables--------------------------------------------------------
-        lstAccountList.addListSelectionListener(new ListSelectionListener()
+        lstCustomerList.addListSelectionListener(new ListSelectionListener()
         {
             public void valueChanged(ListSelectionEvent e)
             {
@@ -418,7 +439,7 @@ public class BankGUI extends Bank
                 winFrame.remove(pnlManageCustomerAccountList);
                 winFrame.remove(pnlManageCustomerMeny);
                 winFrame.setVisible(false);
-                Transaction_Screen(winFrame, customer);
+                Transaction_Screen(winFrame, customer, "m");
             }
         });
         
@@ -631,7 +652,7 @@ public class BankGUI extends Bank
                 winFrame.remove(pnlCustomerAccountList);
                 winFrame.remove(pnlCustomerMenyPanel);
                 winFrame.setVisible(false);
-                Transaction_Screen(winFrame, customer);
+                Transaction_Screen(winFrame, customer, "c");
             }
         });
 
@@ -703,7 +724,7 @@ public class BankGUI extends Bank
         winFrame.setVisible(true);
     }
     
-    public void Transaction_Screen(JFrame winFrame, Customer customer)
+    public void Transaction_Screen(JFrame winFrame, Customer customer, String exitTo)
     {
         winFrame.setName("Transactions - " + customer.getName()+ " " 
                 + customer.getLastName() + " - " + customer.getPersonalNumber());
@@ -740,16 +761,15 @@ public class BankGUI extends Bank
         
         //Leftside Panel-----------------------------------------------------------
         JPanel transactionList = new JPanel();
-
+        transactionList.setPreferredSize(new Dimension(400, 385));
+        transactionList.setLayout(new BorderLayout());
         JList<String> lstTransaction = new JList<>();
         DefaultListModel<String> transactionModel = new DefaultListModel<>();
         lstTransaction.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstTransaction.setFont(new Font(lstTransaction.getFont().getName(), Font.PLAIN, 14));
         lstTransaction.setVisibleRowCount(10);
 
-        //Leftside Panel-----------------------------------------------------------
-        transactionList.setPreferredSize(new Dimension(400, 410));
-        transactionList.setLayout(new BorderLayout());
+        
         
         JButton btnExit = new JButton("Exit");
         //Action Listeners-----------------------------------------------------------
@@ -795,15 +815,31 @@ public class BankGUI extends Bank
         
         btnExit.addActionListener(new ActionListener()
         {
-                    public void actionPerformed(ActionEvent ae){
-                        
+                    public void actionPerformed(ActionEvent ae)
+                    {
+                        winFrame.remove(transactionList);
+                        winFrame.remove(pnlCustomerAccountList);
+                        winFrame.setVisible(false);
+                        try
+                        {
+                            if(exitTo.equalsIgnoreCase("c")){
+                                Customer_Screen(winFrame, customer);
+                            } else if (exitTo.equalsIgnoreCase("m"))
+                            {
+                                Manage_Customer(winFrame, customer);
+                            }
+                        } catch (FileNotFoundException ex)
+                        {
+                            Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
         
         lstTransaction.setModel(transactionModel);
         transactionList.add(lstTransaction);
         transactionList.add(btnExit, BorderLayout.SOUTH);
-        winFrame.add(new JScrollPane(transactionList), BorderLayout.CENTER);
+        
+        winFrame.add(transactionList);
         winFrame.add(pnlCustomerAccountList);
         winFrame.setVisible(false);
         winFrame.setVisible(true);
