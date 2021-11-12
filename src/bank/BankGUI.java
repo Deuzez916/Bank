@@ -381,7 +381,19 @@ public class BankGUI extends Bank
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                System.out.println("btnAddAccount.addActionListener");
+                Add_Account_Modal(customer);
+                DefaultListModel<String> model = new DefaultListModel<>();
+                
+                for (int i = 0; i < customer.getSavingAccountList().size(); i++)
+                {
+                    model.addElement(customer.getSavingAccountList().get(i).toString());
+                }
+                for (int i = 0; i < customer.getCreditAccountList().size(); i++)
+                {
+                    model.addElement(customer.getCreditAccountList().get(i).toString());
+                }
+                lstAccountList.setModel(model);
+                
             }
         });
 
@@ -664,7 +676,7 @@ public class BankGUI extends Bank
                 winFrame.remove(pnlCustomerAccountList);
                 winFrame.remove(pnlCustomerMenyPanel);
                 winFrame.setVisible(false);
-                Admin_Screen(winFrame);
+                Starting_Screen(winFrame);
             }
         });
 
@@ -844,5 +856,77 @@ public class BankGUI extends Bank
         winFrame.setVisible(false);
         winFrame.setVisible(true);
         System.out.println("btnViewTransactions.addActionListener");
+    }
+    
+    public void Add_Account_Modal(Customer customer)
+    {
+        //Creating Frame
+        JFrame winAdd_Frame = new JFrame();
+        winAdd_Frame.setSize(450, 300);
+        winAdd_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        JPanel panel = new JPanel();
+        
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 45));
+        
+        JButton btnAddSavingsAccount = new JButton("Add Savings Account");
+        btnAddSavingsAccount.setPreferredSize(new Dimension(150, 75));
+        btnAddSavingsAccount.setBackground(new java.awt.Color(192,192,192));
+        
+        btnAddSavingsAccount.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                try
+                {
+                    addSavingsAccount(customer);
+                } catch (IOException ex)
+                {
+                    Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        JButton btnAddCreditsAccount = new JButton("Add Credits Account");
+        btnAddCreditsAccount.setPreferredSize(new Dimension(150, 75));
+        btnAddCreditsAccount.setBackground(new java.awt.Color(192,192,192));
+        
+        btnAddCreditsAccount.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                try
+                {
+                    addCreditAccount(customer);
+                } catch (IOException ex)
+                {
+                    Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        JButton btnExit = new JButton("Exit");
+        btnExit.setPreferredSize(new Dimension(350, 75));
+        btnExit.setBackground(new java.awt.Color(192,192,192));
+        
+        btnExit.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                winAdd_Frame.dispose();
+            }
+        });
+        
+        panel.add(btnAddSavingsAccount);
+        panel.add(btnAddCreditsAccount);
+        panel.add(btnExit);
+        
+        winAdd_Frame.add(panel);
+        
+        winAdd_Frame.setVisible(true);
+        winAdd_Frame.setResizable(false);
     }
 }

@@ -135,6 +135,7 @@ public class Customer
         double newSum = oldSum - transactionSum;
         addTransactionList(accountNumber, "s", oldSum, transactionSum, newSum, "r");
         savingAccountList.remove(index);
+        updateSavingsAccountList();
     }
     
     public void removeCreditAccount(int accountNumber) throws IOException
@@ -154,6 +155,7 @@ public class Customer
         double newSum = oldSum - transactionSum;
         addTransactionList(accountNumber, "c", oldSum, transactionSum, newSum, "r");
         creditAccountList.remove(index);
+        updateCreditAccountList();
     }
 
     public void printToSavingsAccountList(SavingsAccount s) throws IOException

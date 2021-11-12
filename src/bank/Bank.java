@@ -131,9 +131,14 @@ public class Bank
     }
 
     // Returnerar kontonumret som det skapade kontot fick
-    public static int addSavingsAccount(long personalNumber)
+    public static void addSavingsAccount(Customer customer) throws IOException
     {
-        return 0;
+        customer.addSavingAccountList();
+    }
+    
+    public static void addCreditAccount(Customer customer) throws IOException
+    {
+        customer.addCreditAccountList();
     }
 
     /*
