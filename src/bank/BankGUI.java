@@ -627,12 +627,27 @@ public class BankGUI extends Bank
         });
 
     //Set Button Enables--------------------------------------------------------    
-        txtAmount.addActionListener(new ActionListener()
+        
+        txtAmount.addKeyListener(new KeyAdapter()
         {
-            public void actionPerformed(ActionEvent e)
-            {
-                txtAmount.setEnabled(false);
-            }
+           public void keyPressed(KeyEvent ke)
+           {
+               if(ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' && !txtAmount.getText().contains(".")
+                       || ke.getKeyCode()== '\b' || ke.getKeyCode()== '.' )
+               {
+                   txtAmount.setEditable(true);
+               }
+               else
+               {
+                   txtAmount.setEditable(false);
+               }
+           }
+           
+           public void keyTyped(KeyEvent e)
+           {
+               if(txtAmount.getText().length() >= 17)
+                   e.consume();
+           }
         });
 
         lstAccountList.addListSelectionListener(new ListSelectionListener()
