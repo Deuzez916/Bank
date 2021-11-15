@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Customer
 {
 
-    private final String name;
+    private final String firstName;
     private final String lastName;
     private final long personalNumber;
     private final double creditLimet = -5000.00;
@@ -29,7 +29,7 @@ public class Customer
 
     Customer(String name, String lastName, long personalNumber, double currentCredit) throws FileNotFoundException, IOException
     {
-        this.name = name;
+        this.firstName = name;
         this.lastName = lastName;
         this.personalNumber = personalNumber;
         this.currentCredit = currentCredit;
@@ -291,9 +291,9 @@ public class Customer
         addTransactionList(accountNumber, accountType, oldSum, transactionSum, newSum, transactionType);
     }
 
-    public String getName()
+    public String getFirstName()
     {
-        return name;
+        return firstName;
     }
 
     public String getLastName()
@@ -324,9 +324,8 @@ public class Customer
     @Override
     public String toString()
     {
-       int firstRepeat = 31 - name.length();
-       int secondRepeat = 29 - lastName.length();
-       return name + " ".repeat(firstRepeat) + lastName + " ".repeat(secondRepeat) + personalNumber;
+       int firstRepeat = 30 - firstName.length();
+       return personalNumber + " ".repeat(firstRepeat) + firstName + " " + lastName ;
     }
     
 }

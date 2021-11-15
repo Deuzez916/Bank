@@ -5,6 +5,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -14,16 +17,14 @@ import javax.swing.JTextField;
 
 public class NewCustomer extends JDialog
 {
+    int controller = 0;
     
     public NewCustomer (JFrame parent, boolean modal)
     {
         super(parent, modal);
-        setLocationRelativeTo(parent);
+        setBounds(280, 137, 380, 301);
         setLayout(new BorderLayout());
-    }
-
-    public void initComponents()
-        {
+        
         JPanel pnlNewCustomer = new JPanel();
         pnlNewCustomer.setPreferredSize(new Dimension(350, 300));
         pnlNewCustomer.setLayout(new FlowLayout(FlowLayout.CENTER, 10,15));
@@ -32,7 +33,6 @@ public class NewCustomer extends JDialog
         lblNewCustomer.setPreferredSize(new Dimension(300, 30));
         lblNewCustomer.setFont(new Font("Verdana", Font.PLAIN, 20));
         lblNewCustomer.setHorizontalAlignment(JLabel.CENTER);
-        
         
         JLabel lblFirstName = new JLabel("First name: ");
         lblFirstName.setPreferredSize(new Dimension(100, 30));
@@ -61,18 +61,59 @@ public class NewCustomer extends JDialog
         
         
         JButton btnCancel = new JButton("Cancel");
-        JButton btnCreate = new JButton("Create");
-        btnCreate.setEnabled(false);
-
         btnCancel.addActionListener(new ActionListener()
         {
             @Override
-            public void actionPerformed(ActionEvent e)
+            public void actionPerformed(ActionEvent arg0)
             {
-              dispose(); 
+                NewCustomer.this.setVisible(false);
             }
         });
         
+        JButton btnCreate = new JButton("Create");
+        btnCreate.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                String firstName = txtFirstName.getText();
+                String lastName = txtLastName.getText();
+                String SSN = txtSSN.getText();
+                
+                Long parseSSN = 0L;
+                if (SSN.length() == 12)
+                {
+                    parseSSN = Long.parseLong(SSN);
+                    for (int i = 0; i < Bank.getCustomerList().size(); i++)
+                    {
+                        if (Bank.getCustomerList().get(i).getPersonalNumber() == parseSSN)
+                        {
+                            parseSSN = 0L;
+                        }
+                    }
+                } else
+                {
+                    System.out.println("Customer already exist");
+                }
+                
+                if(parseSSN > 0 && firstName.length() > 0 && lastName.length() > 0)
+                {
+                    try
+                    {
+                        Bank.addCustomer(firstName, lastName, parseSSN, 0);
+                    } catch (IOException ex)
+                    {
+                        Logger.getLogger(NewCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    controller = 1;
+                    NewCustomer.this.setVisible(false);
+                    System.out.println("succses");
+                } else
+                {
+                    System.out.println("wrong input");
+                }
+            }
+        });
         
         pnlNewCustomer.add(lblNewCustomer);
         pnlNewCustomer.add(lblFirstName);
@@ -84,7 +125,12 @@ public class NewCustomer extends JDialog
         pnlNewCustomer.add(btnCancel);
         pnlNewCustomer.add(btnCreate);
         add(pnlNewCustomer);
-        setSize(380, 300);
-        setVisible(true);
     }
+
+    public int getController()
+    {
+        return controller;
+    }
+    
+    
 }

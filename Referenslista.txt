@@ -70,8 +70,8 @@ https://www.codegrepper.com/search.php?answer_removed=1&q=double%20parse%20jtext
 https://docs.oracle.com/javase/tutorial/uiswing/components/html.html
 
 
-//
-
+//Swing Display Modal Dialog via JDialog | Swing Tutorial #58
+https://www.youtube.com/watch?v=jbwoxGdIWIk
 
 
 //

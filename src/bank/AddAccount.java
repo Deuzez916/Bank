@@ -10,33 +10,25 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class add_account extends JDialog
+public class AddAccount extends JDialog
 {
-    add_account (JFrame parent, boolean modal)
+    int controller = 0;
+    
+    AddAccount (JFrame parent, boolean modal, Customer customer)
     {
         super(parent, modal);
-        setLocationRelativeTo(parent);
+        setBounds(225, 137, 450, 301);
         setLayout(new BorderLayout());
-    }
-    
-    public void runAdd_Account_Modal(Customer customer)
-    {
-        //Creating Frame
-        JFrame winAdd_Frame = new JFrame();
-        winAdd_Frame.setSize(450, 300);
-        winAdd_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel panel = new JPanel();
-        
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 45));
         
-        JButton btnAddSavingsAccount = new JButton("Add Savings Account");
+        JButton btnAddSavingsAccount = new JButton("<html>Add<br/>Savings Account<html>");
         btnAddSavingsAccount.setPreferredSize(new Dimension(150, 75));
         btnAddSavingsAccount.setBackground(new java.awt.Color(192,192,192));
         
@@ -53,11 +45,12 @@ public class add_account extends JDialog
                 {
                     Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                winAdd_Frame.dispose();
+                controller = 1;
+                AddAccount.this.setVisible(false);
             }
         });
         
-        JButton btnAddCreditsAccount = new JButton("Add Credits Account");
+        JButton btnAddCreditsAccount = new JButton("<html>Add<br/>Credits Account<html>");
         btnAddCreditsAccount.setPreferredSize(new Dimension(150, 75));
         btnAddCreditsAccount.setBackground(new java.awt.Color(192,192,192));
         
@@ -74,8 +67,8 @@ public class add_account extends JDialog
                 {
                     Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                winAdd_Frame.dispatchEvent(arg0);
-                winAdd_Frame.dispose();
+                controller = 1;
+                AddAccount.this.setVisible(false);
             }
         });
         
@@ -88,22 +81,18 @@ public class add_account extends JDialog
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                winAdd_Frame.dispose();
+                AddAccount.this.setVisible(false);
             }
         });
         
         panel.add(btnAddSavingsAccount);
         panel.add(btnAddCreditsAccount);
         panel.add(btnExit);
-        
-        winAdd_Frame.add(panel);
-        
-        winAdd_Frame.setVisible(true);
-        winAdd_Frame.setResizable(false);
+        add(panel);
     }
-    
-    public int getModel()
+
+    public int getController()
     {
-        return 1;
+        return controller;
     }
 }

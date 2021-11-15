@@ -52,11 +52,11 @@ public class Bank
         return customerArrayList;
     }
 
-    public static void addCustomer(String name, String lastName, long personalNumber, double currentCredit) throws FileNotFoundException, IOException
+    public static void addCustomer(String firstName, String lastName, long personalNumber, double currentCredit) throws FileNotFoundException, IOException
     {
-        Customer customer = new Customer(name, lastName, personalNumber, currentCredit);
+        Customer customer = new Customer(firstName, lastName, personalNumber, currentCredit);
         customerList.add(customer);
-        addCustomerToFile(name, lastName, personalNumber, currentCredit);
+        addCustomerToFile(firstName, lastName, personalNumber, currentCredit);
     }
 
     public static ArrayList<Customer> getCustomerList()
@@ -78,14 +78,14 @@ public class Bank
         {
             for (Customer customer : customerList)
             {
-                bfWriter.write(customer.getName() + "," + customer.getLastName() + "," 
+                bfWriter.write(customer.getFirstName() + "," + customer.getLastName() + "," 
                         + customer.getPersonalNumber() + "," + customer.getCurrentCredit() +"\n");
             }
         }
     }
     //--------------------------------------------------------------------------
 
-    public static void getCustomers() throws IOException
+    public static void loadCustomerList() throws IOException
     {
 
         try ( BufferedReader fileIn = Files.newBufferedReader(Paths.get("CustomerList.txt")))
