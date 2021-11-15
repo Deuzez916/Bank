@@ -151,6 +151,7 @@ public class Customer
         }
         
         double oldSum = creditAccountList.get(index).getAccountSum();
+        currentCredit -= oldSum;
         double transactionSum = oldSum;
         double newSum = oldSum - transactionSum;
         addTransactionList(accountNumber, "c", oldSum, transactionSum, newSum, "r");

@@ -14,7 +14,7 @@ public class CreditAccountError extends JDialog
     private JLabel label;
     private JButton btn; 
     
-    public CreditAccountError (JFrame parent, boolean modal)
+    public CreditAccountError (JFrame parent, boolean modal, double sum)
     {
         super(parent, modal);
         setLocationRelativeTo(parent);
@@ -37,6 +37,7 @@ public class CreditAccountError extends JDialog
               dispose(); 
             }
         });
+        
         add(label, BorderLayout.CENTER);
         add(btn, BorderLayout.SOUTH);
         
