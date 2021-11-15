@@ -18,14 +18,11 @@ import javax.swing.JPanel;
 
 public class add_account extends JDialog
 {
-    DefaultListModel<String> model;
-    
     add_account (JFrame parent, boolean modal)
     {
         super(parent, modal);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
-       
     }
     
     public void runAdd_Account_Modal(Customer customer)
@@ -56,17 +53,7 @@ public class add_account extends JDialog
                 {
                     Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                for (int i = 0; i < customer.getSavingAccountList().size(); i++)
-                {
-                    model.addElement(customer.getSavingAccountList().get(i).toString());
-                }
-                for (int i = 0; i < customer.getCreditAccountList().size(); i++)
-                {
-                    model.addElement(customer.getCreditAccountList().get(i).toString());
-                }
-                
-                
+                winAdd_Frame.dispose();
             }
         });
         
@@ -87,15 +74,8 @@ public class add_account extends JDialog
                 {
                     Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                for (int i = 0; i < customer.getSavingAccountList().size(); i++)
-                {
-                    model.addElement(customer.getSavingAccountList().get(i).toString());
-                }
-                for (int i = 0; i < customer.getCreditAccountList().size(); i++)
-                {
-                    model.addElement(customer.getCreditAccountList().get(i).toString());
-                }
+                winAdd_Frame.dispatchEvent(arg0);
+                winAdd_Frame.dispose();
             }
         });
         
@@ -120,5 +100,10 @@ public class add_account extends JDialog
         
         winAdd_Frame.setVisible(true);
         winAdd_Frame.setResizable(false);
+    }
+    
+    public int getModel()
+    {
+        return 1;
     }
 }

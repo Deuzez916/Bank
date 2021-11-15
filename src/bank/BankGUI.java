@@ -13,6 +13,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -377,6 +380,8 @@ public class BankGUI extends Bank
         btnExit.setPreferredSize(new Dimension(300, 50));
 
         //Listener------------------------------------------------------------------
+        
+        
         btnAddAccount.addActionListener(new ActionListener()
         {
             @Override
@@ -384,12 +389,27 @@ public class BankGUI extends Bank
             {
                 add_account aa = new add_account(winFrame, true);
                 aa.runAdd_Account_Modal(customer);
-                
-                lstAccountList.setModel(aa.runAdd_Account_Modal(customer));
-                
             }
+            
         });
-
+//        btnAddAccount.addActionListener(new ActionListener()
+//        {
+//            @Override
+//            public void actionPerformed(ActionEvent arg0)
+//            {
+//                DefaultListModel<String> model = new DefaultListModel<>();
+//                for (int i = 0; i < customer.getSavingAccountList().size(); i++)
+//                {
+//                    model.addElement(customer.getSavingAccountList().get(i).toString());
+//                }
+//                for (int i = 0; i < customer.getCreditAccountList().size(); i++)
+//                {
+//                    model.addElement(customer.getCreditAccountList().get(i).toString());
+//                }
+//                lstAccountList.setModel(model);
+//            }
+//        });
+                
         btnChangeName.addActionListener(new ActionListener()
         {
             @Override
