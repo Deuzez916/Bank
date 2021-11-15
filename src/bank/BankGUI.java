@@ -910,9 +910,7 @@ public class BankGUI extends Bank
         
         winFrame.add(transactionList);
         winFrame.add(pnlCustomerAccountList);
-        winFrame.setVisible(false);
         winFrame.setVisible(true);
-        System.out.println("btnViewTransactions.addActionListener");
     }
     
 }
