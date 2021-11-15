@@ -1,2 +1,1 @@
 Bengt,Andersson,190001011234,0.00
-Linus,Lindroth,190002022345,0.00
