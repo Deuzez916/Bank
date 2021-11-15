@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -98,7 +97,6 @@ public class Bank
         }
     }
 
-    // Returnerar true om kund skapades annars returneras false.
     public static boolean addCustomer(String name, long personalNumber)
     {
         return true;
@@ -111,26 +109,17 @@ public class Bank
         return ar;
     }
 
-    /*
-    Returnerar true om namnet ändrades annars returnerar false (om
-    kunden inte fanns).
-     */
     public static boolean changeCustomerName(String name, long personalNumber)
     {
         return true;
     }
 
-    /*
-    Listan som returneras ska innehålla information om alla konton som togs
-    bort och saldot som kunden får tillbaka.
-     */
     public static void removeCustomer(int index) throws IOException
     {
         getCustomerList().remove(index);
         updateCustomerToFile();
     }
 
-    // Returnerar kontonumret som det skapade kontot fick
     public static void addSavingsAccount(Customer customer) throws IOException
     {
         customer.addSavingAccountList();
@@ -141,20 +130,11 @@ public class Bank
         customer.addCreditAccountList();
     }
 
-    /*
-    Returnerar en String som innehåller presentation av kontot med
-    kontonnummer accountId som tillhör kunden personalNumber
-    (kontonummer, saldo, kontotyp).
-     */
     public static String getAccount(long personalNumber, int accountId)
     {
         return "0";
     }
 
-    /*    
-    Gör en insättning på konto med kontonnummer accountId som tillhör
-    kunden personalNumber, returnerar true om det gick bra annars false.
-     */
     public static boolean deposit(String accountType, Long personalNumber, int accountIndex, double transactionSum) throws IOException
     {
         Customer customer = customerList.get(getCustomerIndex(personalNumber));
@@ -163,10 +143,6 @@ public class Bank
         return true;
     }
 
-    /*
-    Gör ett uttag på konto med kontonnummer accountId som tillhör kunden
-    personalNumber, returnerar true om det gick bra annars false.
-     */
     public boolean withdraw(Customer customer, String accountType, int accountIndex, double transactionSum) throws IOException
     {
         double withdrawCheck = 0;
@@ -191,7 +167,6 @@ public class Bank
                 return false;
     }
 
-    
     public static void closeAccount(long personalNumber, int accountId) throws IOException
     {
         Customer customer = customerList.get(getCustomerIndex(personalNumber));
@@ -214,7 +189,6 @@ public class Bank
         }
     }
 
-    //Detta visar transaktionshistoriken för ett visst kundkonto
     public static ArrayList<String> getTransactions(long personalNumber, int accountId)
     {
         ArrayList<String> ar = new ArrayList<String>();
