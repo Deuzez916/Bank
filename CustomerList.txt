@@ -1,1 +1,1 @@
-Bengt,Andersson,190001011234,0.00
+Bengt,Andersson,190001011234,150.0

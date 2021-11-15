@@ -9,12 +9,12 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class SavingsAccountError extends JDialog
+public class CustomerNotFound  extends JDialog
 {
     private JLabel label;
     private JButton btn; 
     
-    public SavingsAccountError (JFrame parent, boolean modal)
+    public CustomerNotFound (JFrame parent, boolean modal)
     {
         super(parent, modal);
         setLocationRelativeTo(parent);
@@ -23,8 +23,8 @@ public class SavingsAccountError extends JDialog
     }
     
     public void initComp()
-        {       
-        label = new JLabel("Your balance is: 5000");
+        {
+        label = new JLabel("Customer Not Found");
         label.setFont(new Font("Verdana", Font.PLAIN, 20));
         label.setHorizontalAlignment(JLabel.CENTER);
         btn = new JButton("Ok");

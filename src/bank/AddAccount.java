@@ -24,6 +24,7 @@ public class AddAccount extends JDialog
         super(parent, modal);
         setBounds(225, 137, 450, 301);
         setLayout(new BorderLayout());
+        setTitle("New Account");
         
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 45));

@@ -49,7 +49,7 @@ public class BankGUI extends Bank
     public void Starting_Screen(JFrame winFrame)
     {
         //JFrame--------------------------------------------------------------------
-        winFrame.setName("Bank Starting Screen");
+        winFrame.setTitle("The AFLM Bank");
         winFrame.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
         
         //JPanel--------------------------------------------------------------------
@@ -148,7 +148,7 @@ public class BankGUI extends Bank
                             Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
-                    } else if (i == getCustomerList().size())
+                    } else 
                     {
                         System.out.println("Hitta inte kund");
                         break;
@@ -186,7 +186,7 @@ public class BankGUI extends Bank
     public void Admin_Screen(JFrame winFrame)
     {
         //JFrame--------------------------------------------------------------------
-        winFrame.setName("Admin");
+        winFrame.setTitle("The AFLM Bank - Admin");
         winFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
 
         //Rightside Panel-----------------------------------------------------------
@@ -327,7 +327,8 @@ public class BankGUI extends Bank
     public void Manage_Customer(JFrame winFrame, Customer customer)
     {
         //JFrame--------------------------------------------------------------------
-        winFrame.setName("Customer");
+        winFrame.setTitle("The AFLM Bank - Admin - Manage: " + customer.getFirstName() + " " 
+                + customer.getLastName() + " - " + customer.getPersonalNumber());
         winFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         //Rightside Panel-----------------------------------------------------------
@@ -510,7 +511,7 @@ public class BankGUI extends Bank
 
     public void Customer_Screen(JFrame winFrame, Customer customer) throws FileNotFoundException
     {
-        winFrame.setName("Customer - " + customer.getFirstName()+ " " 
+        winFrame.setTitle("The AFLM Bank - " + customer.getFirstName()+ " " 
                 + customer.getLastName() + " - " + customer.getPersonalNumber());
         winFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
@@ -761,7 +762,7 @@ public class BankGUI extends Bank
     
     public void Transaction_Screen(JFrame winFrame, Customer customer, String exitTo)
     {
-        winFrame.setName("Transactions - " + customer.getFirstName()+ " " 
+        winFrame.setTitle("Transactions - " + customer.getFirstName()+ " " 
                 + customer.getLastName() + " - " + customer.getPersonalNumber());
         winFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         

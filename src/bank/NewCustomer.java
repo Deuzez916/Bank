@@ -24,6 +24,7 @@ public class NewCustomer extends JDialog
         super(parent, modal);
         setBounds(280, 137, 380, 301);
         setLayout(new BorderLayout());
+        setTitle("New Customer");
         
         JPanel pnlNewCustomer = new JPanel();
         pnlNewCustomer.setPreferredSize(new Dimension(350, 300));

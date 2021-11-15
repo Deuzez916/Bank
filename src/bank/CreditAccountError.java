@@ -19,7 +19,7 @@ public class CreditAccountError extends JDialog
         super(parent, modal);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
-       
+        setTitle("ERROR");
     }
     
     public void initComp()
