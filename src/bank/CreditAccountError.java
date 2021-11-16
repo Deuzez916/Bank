@@ -14,7 +14,7 @@ public class CreditAccountError extends JDialog
     private JLabel label;
     private JButton btn; 
     
-    public CreditAccountError (JFrame parent, boolean modal, double sum)
+    public CreditAccountError (JFrame parent, boolean modal)
     {
         super(parent, modal);
         setLocationRelativeTo(parent);
@@ -24,8 +24,8 @@ public class CreditAccountError extends JDialog
     
     public void initComp()
         {       
-        label = new JLabel("You have a credit max of -5000:-");
-        label.setFont(new Font("Verdana", Font.PLAIN, 20));
+        label = new JLabel("You cannot exceed the credit limit of -5000.");
+        label.setFont(new Font("Verdana", Font.PLAIN, 14));
         label.setHorizontalAlignment(JLabel.CENTER);
         btn = new JButton("Ok");
     
@@ -41,7 +41,7 @@ public class CreditAccountError extends JDialog
         add(label, BorderLayout.CENTER);
         add(btn, BorderLayout.SOUTH);
         
-        setSize(300, 200);
+        setSize(400, 200);
         setVisible(true);
         }
 

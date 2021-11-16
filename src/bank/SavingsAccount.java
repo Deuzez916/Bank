@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class SavingsAccount
@@ -56,13 +57,30 @@ public class SavingsAccount
     
     public void addMoney(double transactionSum)
     {
-        accountSum += transactionSum;
+        BigDecimal bdAccountSum = BigDecimal.valueOf(accountSum);
+        BigDecimal bdTransactionSum = BigDecimal.valueOf(transactionSum);
+        BigDecimal bdNewSum = bdAccountSum.add(bdTransactionSum);
+        System.out.println(bdNewSum.doubleValue());
+        
+        setAccountSum(bdNewSum.doubleValue());
     }
     
     public void withdrawMoney(double transactionSum)
     {
-        accountSum -= transactionSum;
+        BigDecimal bdAccountSum = BigDecimal.valueOf(accountSum);
+        BigDecimal bdTransactionSum = BigDecimal.valueOf(transactionSum);
+        BigDecimal bdNewSum = bdAccountSum.subtract(bdTransactionSum);
+        System.out.println(bdNewSum.doubleValue());
+        
+        setAccountSum(bdNewSum.doubleValue());
     }
+
+    public void setAccountSum(double accountSum)
+    {
+        this.accountSum = accountSum;
+    }
+    
+    
 
     public String toString()
     {

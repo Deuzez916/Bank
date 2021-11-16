@@ -57,12 +57,27 @@ public class CreditAccount
     
     public void addMoney(double transactionSum)
     {
-        accountSum += transactionSum;
+        BigDecimal bdAccountSum = BigDecimal.valueOf(accountSum);
+        BigDecimal bdTransactionSum = BigDecimal.valueOf(transactionSum);
+        BigDecimal bdNewSum = bdAccountSum.add(bdTransactionSum);
+        System.out.println(bdNewSum.doubleValue());
+        
+        setAccountSum(bdNewSum.doubleValue());
     }
     
     public void withdrawMoney(double transactionSum)
     {
-        accountSum -= transactionSum;
+        BigDecimal bdAccountSum = BigDecimal.valueOf(accountSum);
+        BigDecimal bdTransactionSum = BigDecimal.valueOf(transactionSum);
+        BigDecimal bdNewSum = bdAccountSum.subtract(bdTransactionSum);
+        System.out.println(bdNewSum.doubleValue());
+        
+        setAccountSum(bdNewSum.doubleValue());
+    }
+
+    public void setAccountSum(double accountSum)
+    {
+        this.accountSum = accountSum;
     }
 
     public String toString()

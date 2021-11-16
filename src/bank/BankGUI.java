@@ -680,13 +680,20 @@ public class BankGUI extends Bank
                                 + "<br/>Current Credit = " + customer.getCurrentCredit() + "<html>");
                     } else
                     {
-                        SavingsAccountError error = new SavingsAccountError(winFrame, true);
+                        if(accountType.equalsIgnoreCase("s"))
+                        {
+                            SavingsAccountError error = new SavingsAccountError(winFrame, true);
+                            error.initComp();
+                        } else if (accountType.equalsIgnoreCase("c"))
+                        {
+                        CreditAccountError error = new CreditAccountError(winFrame, true);
                         error.initComp();
+                    }
                     }
                     
                 }catch (Exception e)
                 {
-                    SavingsAccountError error = new SavingsAccountError(winFrame, true);
+                    CreditAccountError error = new CreditAccountError(winFrame, true);
                 }
             }
         });

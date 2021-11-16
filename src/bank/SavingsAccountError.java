@@ -24,7 +24,7 @@ public class SavingsAccountError extends JDialog
     
     public void initComp()
         {       
-        label = new JLabel("Your balance is: 5000");
+        label = new JLabel("Withdrawal sum is to big");
         label.setFont(new Font("Verdana", Font.PLAIN, 20));
         label.setHorizontalAlignment(JLabel.CENTER);
         btn = new JButton("Ok");
