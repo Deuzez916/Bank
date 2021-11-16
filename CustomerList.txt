@@ -1,1 +1,1 @@
-Kalle,Svensson,190001011234,-5000.0
+Bengt,Andersson,190001011234,0.0
