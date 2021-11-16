@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,6 +65,37 @@ public class NewCustomer extends JDialog
         
         
         JButton btnCancel = new JButton("Cancel");
+        JButton btnCreate = new JButton("Create");
+        btnCreate.setEnabled(false);
+        
+        txtSSN.addKeyListener(new KeyAdapter()
+        {
+           public void keyPressed(KeyEvent ke)
+           {
+               if(ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyCode()== '\b')
+               {
+                   txtSSN.setEditable(true);
+               }
+               else
+               {
+                   txtSSN.setEditable(false);
+               }
+           }
+           public void keyTyped(KeyEvent e)
+           {
+               if(txtSSN.getText().length() >= 12)
+                   e.consume();
+               if(txtSSN.getText().length() > 10)
+               {
+                   btnCreate.setEnabled(true);
+               }
+               else
+               {
+                   btnCreate.setEnabled(false);
+               }
+           }
+        });
+        
         btnCancel.addActionListener(new ActionListener()
         {
             @Override
@@ -72,7 +105,6 @@ public class NewCustomer extends JDialog
             }
         });
         
-        JButton btnCreate = new JButton("Create");
         btnCreate.addActionListener(new ActionListener()
         {
             @Override
@@ -95,10 +127,11 @@ public class NewCustomer extends JDialog
                     }
                 } else
                 {
-                    System.out.println("Customer already exist");
+                    CustomerNotFound error = new CustomerNotFound(parent, true);
+                    error.initComp();
                 }
                 
-                if(parseSSN > 0 && firstName.length() > 0 && lastName.length() > 0)
+                if(parseSSN > 0 && firstName.trim().length() > 0 && lastName.trim().length() > 0)
                 {
                     try
                     {
@@ -109,10 +142,10 @@ public class NewCustomer extends JDialog
                     }
                     controller = 1;
                     NewCustomer.this.setVisible(false);
-                    System.out.println("succses");
                 } else
                 {
-                    System.out.println("wrong input");
+                    NewCustomerError nce = new NewCustomerError(parent, true);
+                    nce.initComp();
                 }
             }
         });

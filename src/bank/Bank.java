@@ -15,18 +15,15 @@ import java.util.ArrayList;
 
 public class Bank
 {
-
     private static ArrayList<Customer> customerList;
-
-    public static void main(String[] args) throws IOException
+    
+    public static void setCustomerList(ArrayList<Customer> customerList)
     {
-        customerList = createCustomerList();
-
-        BankGUI b = new BankGUI();
-        b.runBankGUI();
+        Bank.customerList = customerList;
     }
-
-    private static ArrayList<Customer> createCustomerList() throws FileNotFoundException, IOException
+    
+    
+    public static ArrayList<Customer> createCustomerList() throws FileNotFoundException, IOException
     {
         ArrayList<Customer> customerArrayList = new ArrayList<>();
 

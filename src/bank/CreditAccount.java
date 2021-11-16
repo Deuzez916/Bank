@@ -60,7 +60,6 @@ public class CreditAccount
         BigDecimal bdAccountSum = BigDecimal.valueOf(accountSum);
         BigDecimal bdTransactionSum = BigDecimal.valueOf(transactionSum);
         BigDecimal bdNewSum = bdAccountSum.add(bdTransactionSum);
-        System.out.println(bdNewSum.doubleValue());
         
         setAccountSum(bdNewSum.doubleValue());
     }
@@ -70,7 +69,6 @@ public class CreditAccount
         BigDecimal bdAccountSum = BigDecimal.valueOf(accountSum);
         BigDecimal bdTransactionSum = BigDecimal.valueOf(transactionSum);
         BigDecimal bdNewSum = bdAccountSum.subtract(bdTransactionSum);
-        System.out.println(bdNewSum.doubleValue());
         
         setAccountSum(bdNewSum.doubleValue());
     }

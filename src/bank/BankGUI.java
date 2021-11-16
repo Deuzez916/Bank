@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -31,8 +32,9 @@ import javax.swing.event.ListSelectionListener;
 
 public class BankGUI extends Bank
 {
-    public void runBankGUI()
+    public void runBankGUI() throws IOException
     {
+        setCustomerList(createCustomerList());
         Starting_Screen(getJFrame());
     }
     
@@ -145,33 +147,32 @@ public class BankGUI extends Bank
                             Customer_Screen(winFrame, getCustomerList().get(i));
                         } catch (FileNotFoundException ex)
                         {
-                            Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
+                            CustomerNotFound error = new CustomerNotFound(winFrame, true);
+                            error.initComp();
                         }
                         break;
-                    } else 
-                    {
-                        System.out.println("Hitta inte kund");
-                        break;
                     }
-                } 
+                    
+                    if (i == getCustomerList().size() - 1)
+                    {
+                        CustomerNotFound error = new CustomerNotFound(winFrame, true);
+                        error.initComp();
+                    }
+                }  
+                
+                if (getCustomerList().size() == 0)
+                    {
+                        CustomerNotFound error = new CustomerNotFound(winFrame, true);
+                        error.initComp();
+                    }
             }
         });
-        
-        //SSN.setMaximumSize(maximumSize MaxAndMinimumSize);
-        //SSN.setMinimumSize(minimumSize 12);
        
         //Adding JPanels------------------------------------------------------------
         pnlStartingScreenLeftPanel.add(btnAdmin);
-        
         plnStartingScreenRightPanel.add(btnCustomer);
         plnStartingScreenRightPanel.add(txtSSN);
         
-        //Bakgrunds färg
-        //STARTING_SCREEN.setBackground(new java.awt.Color(192,192,192));
-        //leftpanel.setBackground(new java.awt.Color(192,192,192));
-        //rightpanel.setBackground(new java.awt.Color(192,192,192));
-        
-            // 238 knapp färg
         //Buttons Color-------------------------------------------------------------
         btnAdmin.setBackground(new java.awt.Color(220,220,220));
         btnCustomer.setBackground(new java.awt.Color(220,220,220));
@@ -274,6 +275,8 @@ public class BankGUI extends Bank
                     model.addElement(getCustomerList().get(i).toString());
                 }
                 lstCustomerList.setModel(model);
+                btnRemoveCustomer.setEnabled(false);
+                btnManageCustomer.setEnabled(false);
             }
         });
 
@@ -649,7 +652,6 @@ public class BankGUI extends Bank
                     
                 }catch (Exception e)
                 {
-                    System.err.println("ups, this was not castable to double");
                 }
             }
         });
