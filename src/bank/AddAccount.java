@@ -86,6 +86,11 @@ public class AddAccount extends JDialog
             }
         });
         
+        //Buttons Color-------------------------------------------------------------
+        btnAddSavingsAccount.setBackground(new java.awt.Color(220,220,220));
+        btnAddCreditsAccount.setBackground(new java.awt.Color(220,220,220));
+        btnExit.setBackground(new java.awt.Color(220,220,220));
+        
         panel.add(btnAddSavingsAccount);
         panel.add(btnAddCreditsAccount);
         panel.add(btnExit);

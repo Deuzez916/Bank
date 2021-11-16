@@ -117,6 +117,16 @@ public class NewCustomer extends JDialog
             }
         });
         
+        lblNewCustomer.setBackground(new java.awt.Color(220,220,220));
+        lblFirstName.setBackground(new java.awt.Color(220,220,220));
+        txtFirstName.setBackground(new java.awt.Color(220,220,220));
+        lblLastName.setBackground(new java.awt.Color(220,220,220));
+        txtLastName.setBackground(new java.awt.Color(220,220,220));
+        lblSSN.setBackground(new java.awt.Color(220,220,220));
+        txtSSN.setBackground(new java.awt.Color(220,220,220));
+        btnCancel.setBackground(new java.awt.Color(220,220,220));
+        btnCreate.setBackground(new java.awt.Color(220,220,220));
+        
         pnlNewCustomer.add(lblNewCustomer);
         pnlNewCustomer.add(lblFirstName);
         pnlNewCustomer.add(txtFirstName);

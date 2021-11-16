@@ -11,8 +11,8 @@ import javax.swing.JLabel;
 
 public class CreditAccountError extends JDialog
 {
-    private JLabel label;
-    private JButton btn; 
+    private JLabel lblError;
+    private JButton btnOk; 
     
     public CreditAccountError (JFrame parent, boolean modal)
     {
@@ -24,12 +24,12 @@ public class CreditAccountError extends JDialog
     
     public void initComp()
         {       
-        label = new JLabel("You cannot exceed the credit limit of -5000.");
-        label.setFont(new Font("Verdana", Font.PLAIN, 14));
-        label.setHorizontalAlignment(JLabel.CENTER);
-        btn = new JButton("Ok");
+        lblError = new JLabel("You cannot exceed the credit limit of -5000.");
+        lblError.setFont(new Font("Verdana", Font.PLAIN, 14));
+        lblError.setHorizontalAlignment(JLabel.CENTER);
+        btnOk = new JButton("Ok");
     
-        btn.addActionListener(new ActionListener()
+        btnOk.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -38,8 +38,11 @@ public class CreditAccountError extends JDialog
             }
         });
         
-        add(label, BorderLayout.CENTER);
-        add(btn, BorderLayout.SOUTH);
+        //Buttons Color-------------------------------------------------------------
+        btnOk.setBackground(new java.awt.Color(220,220,220));
+        
+        add(lblError, BorderLayout.CENTER);
+        add(btnOk, BorderLayout.SOUTH);
         
         setSize(400, 200);
         setVisible(true);

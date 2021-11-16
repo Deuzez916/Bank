@@ -173,9 +173,9 @@ public class BankGUI extends Bank
         
             // 238 knapp färg
         //Buttons Color-------------------------------------------------------------
-        btnAdmin.setBackground(new java.awt.Color(192,192,192));
-        btnCustomer.setBackground(new java.awt.Color(192,192,192));
-        txtSSN.setBackground(new java.awt.Color(192,192,192));
+        btnAdmin.setBackground(new java.awt.Color(220,220,220));
+        btnCustomer.setBackground(new java.awt.Color(220,220,220));
+        txtSSN.setBackground(new java.awt.Color(220,220,220));
         
         //Adding to JFrame----------------------------------------------------------
         winFrame.add(pnlStartingScreenLeftPanel);
@@ -311,6 +311,12 @@ public class BankGUI extends Bank
             }
         });
 
+        //Buttons Color-------------------------------------------------------------
+        btnAddCustomer.setBackground(new java.awt.Color(220,220,220));
+        btnRemoveCustomer.setBackground(new java.awt.Color(220,220,220));
+        btnManageCustomer.setBackground(new java.awt.Color(220,220,220));
+        btnExit.setBackground(new java.awt.Color(220,220,220));
+        
         //Adding to Leftside Panel--------------------------------------------------
         pnlAdminMeny.add(btnAddCustomer);
         pnlAdminMeny.add(btnRemoveCustomer);
@@ -506,6 +512,14 @@ public class BankGUI extends Bank
             }
         });
 
+        //Buttons Color-------------------------------------------------------------
+        lblPersonalInfo.setBackground(new java.awt.Color(220,220,220));
+        btnAddAccount.setBackground(new java.awt.Color(220,220,220));
+        btnChangeName.setBackground(new java.awt.Color(220,220,220));
+        btnRemoveAccount.setBackground(new java.awt.Color(220,220,220));
+        btnViewTransactions.setBackground(new java.awt.Color(220,220,220));
+        btnExit.setBackground(new java.awt.Color(220,220,220));
+        
         //Adding to Leftside Panel--------------------------------------------------
         pnlManageCustomerMeny.add(lblPersonalInfo);
         pnlManageCustomerMeny.add(btnAddAccount);
@@ -763,6 +777,15 @@ public class BankGUI extends Bank
             }
         });
 
+        //Buttons Color-------------------------------------------------------------
+        lblAmount.setBackground(new java.awt.Color(220,220,220));
+        txtAmount.setBackground(new java.awt.Color(220,220,220));
+        btnAddMoney.setBackground(new java.awt.Color(220,220,220));
+        btnWithdrawMoney.setBackground(new java.awt.Color(220,220,220));
+        btnViewTransactions.setBackground(new java.awt.Color(220,220,220));
+        lblCreditLimit.setBackground(new java.awt.Color(220,220,220));
+        btnExit.setBackground(new java.awt.Color(220,220,220));
+        
     //Adding to Leftside Panel--------------------------------------------------    
         pnlCustomerMenyPanel.add(lblAmount);
         pnlCustomerMenyPanel.add(txtAmount);
@@ -921,6 +944,9 @@ public class BankGUI extends Bank
             }
         });
 
+        //Buttons Color-------------------------------------------------------------
+        btnExit.setBackground(new java.awt.Color(220,220,220));
+        
         lstTransaction.setModel(transactionModel);
         transactionList.add(lblTransactions);
         transactionList.add(new JScrollPane(lstTransaction), BorderLayout.CENTER);

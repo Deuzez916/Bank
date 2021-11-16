@@ -11,8 +11,8 @@ import javax.swing.JLabel;
 
 public class SavingsAccountError extends JDialog
 {
-    private JLabel label;
-    private JButton btn; 
+    private JLabel lblError;
+    private JButton btnOk; 
     
     public SavingsAccountError (JFrame parent, boolean modal)
     {
@@ -24,12 +24,12 @@ public class SavingsAccountError extends JDialog
     
     public void initComp()
         {       
-        label = new JLabel("Withdrawal sum is to big");
-        label.setFont(new Font("Verdana", Font.PLAIN, 20));
-        label.setHorizontalAlignment(JLabel.CENTER);
-        btn = new JButton("Ok");
+        lblError = new JLabel("Withdrawal sum is to big");
+        lblError.setFont(new Font("Verdana", Font.PLAIN, 20));
+        lblError.setHorizontalAlignment(JLabel.CENTER);
+        btnOk = new JButton("Ok");
     
-        btn.addActionListener(new ActionListener()
+        btnOk.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -37,8 +37,12 @@ public class SavingsAccountError extends JDialog
               dispose(); 
             }
         });
-        add(label, BorderLayout.CENTER);
-        add(btn, BorderLayout.SOUTH);
+        
+        //Buttons Color-------------------------------------------------------------
+        btnOk.setBackground(new java.awt.Color(220,220,220));
+        
+        add(lblError, BorderLayout.CENTER);
+        add(btnOk, BorderLayout.SOUTH);
         
         setSize(300, 200);
         setVisible(true);
