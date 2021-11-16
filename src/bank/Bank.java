@@ -109,8 +109,11 @@ public class Bank
         return ar;
     }
 
-    public static boolean changeCustomerName(String name, long personalNumber)
+    public static boolean changeCustomerName(String firstName, String Lastname, Customer customer) throws IOException
     {
+        customer.setFirstName(firstName);
+        customer.setLastName(Lastname);
+        updateCustomerToFile();
         return true;
     }
 

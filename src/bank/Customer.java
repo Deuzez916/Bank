@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class Customer
 {
 
-    private final String firstName;
-    private final String lastName;
+    private String firstName;
+    private String lastName;
     private final long personalNumber;
     private final double creditLimet = -5000.00;
     private double currentCredit;
@@ -296,11 +296,21 @@ public class Customer
         return firstName;
     }
 
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+    
     public String getLastName()
     {
         return lastName;
     }
 
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
+    
     public long getPersonalNumber()
     {
         return personalNumber;

@@ -421,7 +421,18 @@ public class BankGUI extends Bank
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                System.out.println("btnChangeName.addActionListener");
+                ChangeName ch = new ChangeName(winFrame, true, customer);
+                ch.setModal(true);
+                ch.setVisible(true);
+                if (ch.getController() == 1)
+                {
+                    winFrame.setTitle("The AFLM Bank - Admin - Manage: " + customer.getFirstName() + " "
+                            + customer.getLastName() + " - " + customer.getPersonalNumber());
+
+                    lblPersonalInfo.setText("<html>Name - " + customer.getFirstName()
+                            + "<br/>Lastname - " + customer.getLastName()
+                            + "<br/>SSN - " + customer.getPersonalNumber() + "<html>");
+                }
             }
         });
 
