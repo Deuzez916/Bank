@@ -263,7 +263,10 @@ public class BankGUI extends Bank
             {
                 try
                 {
-                    removeCustomer(lstCustomerList.getSelectedIndex());
+                    int index = lstCustomerList.getSelectedIndex();
+                    RemovingCustomer rc = new RemovingCustomer(winFrame, true, getCustomerList().get(index));
+                    rc.initComp(getCustomerList().get(index));
+                    removeCustomer(index);
                 } catch (IOException ex)
                 {
                     Logger.getLogger(BankGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -275,6 +278,8 @@ public class BankGUI extends Bank
                     model.addElement(getCustomerList().get(i).toString());
                 }
                 lstCustomerList.setModel(model);
+                
+                
                 btnRemoveCustomer.setEnabled(false);
                 btnManageCustomer.setEnabled(false);
             }
